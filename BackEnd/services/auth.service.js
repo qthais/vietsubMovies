@@ -51,7 +51,7 @@ exports.login = async (email, password, username, image, isGoogleLogin) => {
       throw new Error("Invalid Google login data");
     }
 
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email }).populate('viewHistory');
     if (!user) {
       user = await User.create({
         email,
@@ -72,7 +72,7 @@ exports.login = async (email, password, username, image, isGoogleLogin) => {
       throw new Error("All fields are required!");
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate('viewHistory');
     if (!user) {
       throw new Error("Invalid credentials");
     }

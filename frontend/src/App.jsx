@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Navbar, Footer } from "./commonPaths";
+import { Footer } from "./commonPaths";
 import Notfound from "./pages/notfound/notfound";
 import Rating from "./pages/detail/rateMovieFunct";
 import { Toaster } from "react-hot-toast";
@@ -10,8 +10,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import Watching from "./pages/watching/watching";
 import Detail from "./pages/detail/detail";
-// New
-import Header from "./components-main/header/Header";
+import AdminDashboard from "./pages/home/AdminDashboard";
 import Search from "./pages/search/search";
 import ProfileEdit from "./pages/profile/Profile";
 
@@ -22,12 +21,15 @@ import HomeScreenCheck from "./pages/home/HomeScreenCheck";
 import Logitech from "./pages/auth/login/logitech";
 import { Loader } from "lucide-react";
 import { useAuth } from "./Context/authContext";
+
 function App() {
   const { user, isCheckingAuth, authCheck } = useAuth();
+
   useEffect(() => {
-    authCheck();
+    authCheck(); // Check authentication state on load
   }, []);
-  if (isCheckingAuth)
+
+  if (isCheckingAuth) {
     return (
       <div className="h-screen flex items-center justify-center bg-black">
         <div>
@@ -35,30 +37,49 @@ function App() {
         </div>
       </div>
     );
-  console.log(user);
+  }
+
   return (
     <>
-      <Router>
-        {/* <Navbar /> */}
-        <Routes>
-          {/* <Route path="/" element={<Homepage />} /> */}
-          <Route path="/" element={<HomeScreenCheck />} />
-          <Route
-            path="/login"
-            element={!user ? <Logitech /> : <Navigate to={"/"} />}
-          ></Route>
-          <Route path="/watching/:id/:type" element={<Watching />} />
-          <Route path="/movie/:id/rate" element={<Rating />} />
-          <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="*" element={<Notfound />} />
-          <Route
-            path="/edit-profile"
-            element={user ? <ProfileEdit /> : <Navigate to={"/"} />}
-          ></Route>
-        </Routes>
-        {/* <Footer /> */}
-      </Router>
+      {/* App Content */}
+      <Routes>
+        {/* Always Render HomeScreenCheck */}
+        <Route path="/" element={<HomeScreenCheck />} />
+
+        {/* Conditional Routes */}
+        <Route
+          path="/admin"
+          element={
+            user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/" />
+          }
+        />
+        <Route
+          path="/login"
+          element={!user ? <Logitech /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/watching/:id/:type"
+          element={ <Watching />}
+        />
+        <Route
+          path="/movie/:id/rate"
+          element={ <Rating /> }
+        />
+        <Route
+          path="/detail/:id"
+          element={ <Detail /> }
+        />
+        <Route
+          path="/search"
+          element={ <Search /> }
+        />
+        <Route
+          path="/edit-profile"
+          element={ <ProfileEdit /> }
+        />
+        <Route path="*" element={<Notfound />} />
+      </Routes>
+      <Footer />
       <Toaster />
     </>
   );

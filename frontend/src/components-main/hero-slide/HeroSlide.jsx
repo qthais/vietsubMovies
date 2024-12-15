@@ -4,14 +4,10 @@ import { useNavigate } from "react-router-dom";
 // Swiper: create carousel (slide show images or content)
 import SwiperCore from "swiper";
 import "swiper/css";
-
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "./hero-slide.css";
-
 import movieApi, { movieType } from "../../api/movieApi";
-import axios from "axios";
 import { image_API } from "../../api/apiConfig";
 import Button, { OutlineButton } from "../button/Button";
 import { FaUser } from "react-icons/fa";
@@ -75,10 +71,10 @@ const HeroSlide = () => {
         slidesPerView={1} // number of slides per view (slides visible)
         direction="horizontal" // slide direction
         loop={true} // loop slides
-        // autoplay={{
-        //     delay: 2000, // delay between slides
-        //     disableOnInteraction: false // stop autoplay on user interaction
-        // }}
+        autoplay={{
+            delay: 4000, // delay between slides
+            disableOnInteraction: false // stop autoplay on user interaction
+        }}
       >
         {movieItems.map((movie, index) => {
           // console.log("movie is: ")
@@ -131,7 +127,7 @@ const HeroSlideItem = (props) => {
             <p className="hero-views"> {item.view} </p>
             <FaUser></FaUser>
           </div>
-          <p className="overview">{item.overview}</p>
+          <p className="line-clamp-3 overview">{item.overview}</p>
           <div className="btns">
             <Button onClick={() => navigate(`/watching/${item.id}/full-time`)}>
               Watch Now
