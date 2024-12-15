@@ -9,7 +9,11 @@ import toast from "react-hot-toast";
 import { Edit } from "lucide-react";
 import axios from "axios";
 import EditMovieModal from "../../components-main/admin/editModal";
+import ReactPaginate from "react-paginate";
 const Search = () => {
+  const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 12;
   const location = useLocation();
   const [searchMode, setSearchMode] = useState("filter");
   const [movies, setMovies] = useState([]);
@@ -18,6 +22,14 @@ const Search = () => {
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEditMovie, setCurrentEditMovie] = useState(null);
+  const pageCount = Math.ceil(movies.length / itemsPerPage);
+  const startOffset = currentPage * itemsPerPage;
+  const endOffset = startOffset + itemsPerPage;
+  const currentMovies = movies.slice(startOffset, endOffset);
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected); // Update current page
+  };
+
   const handleReleased = async (movieID) => {
     try {
       const response = await movieApi.toggleReleased(movieID);
@@ -62,7 +74,28 @@ const Search = () => {
       toast.error(err.response?.data.message || "Update failed!");
     }
   };
+  useEffect(() => {
+    const updatePageRange = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setPageRangeDisplayed(3);
+      } else if (width >= 640 && width < 768) {
+        setPageRangeDisplayed(4);
+      } else if (width >= 768 && width < 1024) {
+        setPageRangeDisplayed(5);
+      } else if (width >= 1024 && width < 1280) {
+        setPageRangeDisplayed(6);
+      } else {
+        setPageRangeDisplayed(7);
+      }
+    };
 
+    updatePageRange();
+
+    window.addEventListener("resize", updatePageRange);
+
+    return () => window.removeEventListener("resize", updatePageRange);
+  }, []);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const movieNameQueryParam = queryParams.get("movieName");
@@ -190,7 +223,7 @@ const Search = () => {
                 })()}
               </div>
               <div className="search-movie-list">
-                {movies.map((movie) => (
+                {currentMovies.map((movie) => (
                   <div className="movieCard" key={movie.id}>
                     <MovieCard item={movie} />
                     {user.role == "admin" && (
@@ -235,6 +268,21 @@ const Search = () => {
         movie={currentEditMovie}
         setMovie={setCurrentEditMovie}
         onSave={() => handleUpdate(currentEditMovie._id)}
+      />
+            <ReactPaginate
+        breakLabel="..."
+        nextLabel="Next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={pageRangeDisplayed}
+        pageCount={pageCount}
+        previousLabel="< Previous"
+        containerClassName="flex justify-center items-center space-x-2 mt-8" // Wrapper styling
+        pageClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black" // Individual page styling
+        activeClassName="bg-blue-500 text-white" // Active page styling
+        previousClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black"
+        nextClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black"
+        breakClassName="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100"
+        disabledClassName="opacity-50 cursor-not-allowed" // Disabled state styling
       />
     </>
   );
