@@ -10,7 +10,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import Watching from "./pages/watching/watching";
 import Detail from "./pages/detail/detail";
-import AdminDashboard from './pages/home/AdminDashboard';
+import AdminDashboard from "./pages/home/AdminDashboard";
 import Search from "./pages/search/search";
 import ProfileEdit from "./pages/profile/Profile";
 
@@ -21,12 +21,15 @@ import HomeScreenCheck from "./pages/home/HomeScreenCheck";
 import Logitech from "./pages/auth/login/logitech";
 import { Loader } from "lucide-react";
 import { useAuth } from "./Context/authContext";
+
 function App() {
   const { user, isCheckingAuth, authCheck } = useAuth();
+
   useEffect(() => {
-    authCheck();
+    authCheck(); // Check authentication state on load
   }, []);
-  if (isCheckingAuth)
+
+  if (isCheckingAuth) {
     return (
       <div className="h-screen flex items-center justify-center bg-black">
         <div>
@@ -34,59 +37,49 @@ function App() {
         </div>
       </div>
     );
-  if(user?.role=='admin'){
-    return (
-      <>
-      <Router>
-        {/* <Navbar /> */}
-        <Routes>
-          {/* <Route path="/" element={<Homepage />} /> */}
-          <Route path="/" element={<HomeScreenCheck />} />
-          <Route path="/admin" element={user?<AdminDashboard/>:<Navigate to={"/"}/>} />
-          <Route
-            path="/login"
-            element={!user ? <Logitech /> : <Navigate to={"/"} />}
-          ></Route>
-          <Route path="/watching/:id/:type" element={user?<Watching />:<Navigate to={"/"}/>} />
-          <Route path="/movie/:id/rate" element={user?<Rating />:<Navigate to={"/"}/>} />
-          <Route path="/detail/:id" element={user?<Detail />:<Navigate to={"/"}/>} />
-          <Route path="/search" element={user?<Search />:<Navigate to={"/"}/>} />
-          <Route path="*" element={<Notfound />} />
-          <Route
-            path="/edit-profile"
-            element={user ? <ProfileEdit /> : <Navigate to={"/"} />}
-          ></Route>
-        </Routes>
-        <Footer />
-      </Router>
-      <Toaster />
-    </>
-      
-    )
   }
+
   return (
     <>
-      <Router>
-        {/* <Navbar /> */}
-        <Routes>
-          {/* <Route path="/" element={<Homepage />} /> */}
-          <Route path="/" element={<HomeScreenCheck />} />
-          <Route
-            path="/login"
-            element={!user ? <Logitech /> : <Navigate to={"/"} />}
-          ></Route>
-          <Route path="/watching/:id/:type" element={user?<Watching />:<Navigate to={"/"}/>} />
-          <Route path="/movie/:id/rate" element={user?<Rating />:<Navigate to={"/"}/>} />
-          <Route path="/detail/:id" element={user?<Detail />:<Navigate to={"/"}/>} />
-          <Route path="/search" element={user?<Search />:<Navigate to={"/"}/>} />
-          <Route path="*" element={<Notfound />} />
-          <Route
-            path="/edit-profile"
-            element={user ? <ProfileEdit /> : <Navigate to={"/"} />}
-          ></Route>
-        </Routes>
-        <Footer />
-      </Router>
+      {/* App Content */}
+      <Routes>
+        {/* Always Render HomeScreenCheck */}
+        <Route path="/" element={<HomeScreenCheck />} />
+
+        {/* Conditional Routes */}
+        <Route
+          path="/admin"
+          element={
+            user?.role === "admin" ? <AdminDashboard /> : <Navigate to="/" />
+          }
+        />
+        <Route
+          path="/login"
+          element={!user ? <Logitech /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/watching/:id/:type"
+          element={ <Watching />}
+        />
+        <Route
+          path="/movie/:id/rate"
+          element={ <Rating /> }
+        />
+        <Route
+          path="/detail/:id"
+          element={ <Detail /> }
+        />
+        <Route
+          path="/search"
+          element={ <Search /> }
+        />
+        <Route
+          path="/edit-profile"
+          element={ <ProfileEdit /> }
+        />
+        <Route path="*" element={<Notfound />} />
+      </Routes>
+      <Footer />
       <Toaster />
     </>
   );

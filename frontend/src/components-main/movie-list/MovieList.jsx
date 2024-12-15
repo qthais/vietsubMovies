@@ -5,13 +5,9 @@ import "./movie-list.css";
 import "swiper/css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Link, useLocation } from "react-router-dom";
 
 import MovieCard from "../movie-card/MovieCard";
-import Button from "../button/Button";
-import { image_API } from "../../api/apiConfig";
 import movieApi from "../../api/movieApi";
-
 const MovieList = (props) => {
   const [movies, setMovies] = useState(props.movies || []);
 

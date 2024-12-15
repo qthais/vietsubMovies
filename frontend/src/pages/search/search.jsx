@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MovieCard from "../../components-main/movie-card/MovieCard";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
 import movieApi from "../../api/movieApi";
 import "./search.css";
 import Header from "../../components-main/header/Header";
@@ -14,6 +8,7 @@ import { useAuth } from "../../Context/authContext";
 import toast from "react-hot-toast";
 import { Edit } from "lucide-react";
 import axios from "axios";
+import EditMovieModal from "../../components-main/admin/editModal";
 const Search = () => {
   const location = useLocation();
   const [searchMode, setSearchMode] = useState("filter");
@@ -234,127 +229,13 @@ const Search = () => {
           )}
         </div>
       </div>
-      <Dialog
-        open={isModalOpen}
-        onClose={setIsModalOpen}
-        className="relative z-10"
-      >
-        <DialogBackdrop className="fixed inset-0 bg-gray-500/75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in" />
-
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-            <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg">
-              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                <DialogTitle
-                  as="h3"
-                  className="text-base font-semibold text-gray-900"
-                >
-                  Edit Movie Details
-                </DialogTitle>
-                <div className="mt-4 space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Title
-                    </label>
-                    <input
-                      type="text"
-                      value={currentEditMovie?.title}
-                      onChange={(e) =>
-                        setCurrentEditMovie({
-                          ...currentEditMovie,
-                          title: e.target.value,
-                        })
-                      }
-                      className="mt-1 text-black bg-gray-200 bg-first-blue px-4 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Overview
-                    </label>
-                    <textarea
-                      value={currentEditMovie?.overview}
-                      onChange={(e) => {
-                        setCurrentEditMovie({
-                          ...currentEditMovie,
-                          overview: e.target.value,
-                        });
-                      }}
-                      className="mt-1 text-black bg-gray-200 overflow-auto h-[6rem] px-4 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Backdrop Path
-                    </label>
-                    <input
-                      type="text"
-                      value={currentEditMovie?.backdrop_path}
-                      onChange={(e) =>
-                        setCurrentEditMovie({
-                          ...currentEditMovie,
-                          backdrop_path: e.target.value,
-                        })
-                      }
-                      className="mt-1 text-black bg-gray-200 px-4 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Poster Path
-                    </label>
-                    <input
-                      type="text"
-                      value={currentEditMovie?.poster_path}
-                      onChange={(e) =>
-                        setCurrentEditMovie({
-                          ...currentEditMovie,
-                          poster_path: e.target.value,
-                        })
-                      }
-                      className="mt-1 text-black bg-gray-200 px-4 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Runtime
-                    </label>
-                    <input
-                      type="number"
-                      value={currentEditMovie?.runtime}
-                      onChange={(e) =>
-                        setCurrentEditMovie({
-                          ...currentEditMovie,
-                          runtime: e.target.value,
-                        })
-                      }
-                      className="mt-1 text-black bg-gray-200 px-4 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleUpdate(currentEditMovie._id);
-                  }}
-                  className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
-                >
-                  Save Changes
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                >
-                  Cancel
-                </button>
-              </div>
-            </DialogPanel>
-          </div>
-        </div>
-      </Dialog>
+      <EditMovieModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        movie={currentEditMovie}
+        setMovie={setCurrentEditMovie}
+        onSave={() => handleUpdate(currentEditMovie._id)}
+      />
     </>
   );
 };

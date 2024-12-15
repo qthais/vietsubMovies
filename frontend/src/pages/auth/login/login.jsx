@@ -69,7 +69,6 @@ const LoginPage = () => {
               className="w-full py-2 bg-white text-first-blue font-light rounded-md"
               onSuccess={(credentialResponse) => {
                 const decoded = jwtDecode(credentialResponse.credential)
-                console.log(decoded)
                 const { name, email, picture } = decoded
                 login({
                   email,

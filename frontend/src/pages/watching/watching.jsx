@@ -7,12 +7,14 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import Header from "../../components-main/header/Header";
 import { formatReleaseDate } from "../../utils/DateFunction";
 import { ORIGINAL_IMG_BASE_URL } from "../../utils/constant";
+import { useAuth } from "../../Context/authContext";
 const Watching = () => {
   const { id, type } = useParams(); //watching/:id or watching/:id/:type
   const [videoLink, setVideoLink] = useState([]);
-  const [movieData,setMovieData]=useState(null)
+  const [movieData, setMovieData] = useState(null);
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
-  const [isLoading,setIsLoading]=useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const [iframeDimensions, setIframeDimensions] = useState({
     width: 854, // Default width
     height: 480, // Default height
@@ -22,12 +24,11 @@ const Watching = () => {
       const width = window.innerWidth;
 
       if (width < 640) {
-        setIframeDimensions({ width: 426, height: 240 }); 
+        setIframeDimensions({ width: 426, height: 240 });
       } else if (width >= 640 && width < 1024) {
-        setIframeDimensions({ width: 640, height: 360 }); 
-      } 
-       else {
-        setIframeDimensions({ width: 854, height: 480 }); 
+        setIframeDimensions({ width: 640, height: 360 });
+      } else {
+        setIframeDimensions({ width: 854, height: 480 });
       }
     };
 
@@ -41,11 +42,11 @@ const Watching = () => {
   }, []);
   useEffect(() => {
     const getLink = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
         const response = await axios.get(`/api/movie/${id}/details`);
-        console.log("Fetched data:", response.data);
         setMovieData(response.data.content);
+        increaseViewCount(response.data.content);
 
         let video = null;
         if (type === "trailer") {
@@ -74,28 +75,27 @@ const Watching = () => {
         if (!video) {
           console.log(`No ${type || "full-time"} video available.`);
         }
-        setIsLoading(false)
-        
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     getLink();
-  }, [id, type]);
-
-  // increase view
-  useEffect(() => {
-    // Set a timer to count one view after 1 minutes
-    if(id){
-      increaseViewCount()
-    }
   }, []);
 
+
   // increase view count
-  const increaseViewCount = async () => {
+  const increaseViewCount = async (movieDetail) => {
     try {
       await axios.get(`/api/movie/${id}/view`);
-      console.log(id);
+      const updatedViewHistory = user.viewHistory.filter(
+        (item) => item._id !== movieDetail?._id
+      );
+      updatedViewHistory.unshift(movieDetail); 
+      setUser(prev=>({
+        ...prev,
+        viewHistory:updatedViewHistory,
+      }))
     } catch (error) {
       console.error(error);
     }
@@ -105,9 +105,9 @@ const Watching = () => {
   const handleGoBack = () => {
     navigate(`/`);
   };
-  if(isLoading){
+  if (isLoading) {
     return (
-      <div className="h-screen text-white relatvie">
+      <div className="h-screen text-white relative">
         <div className="container">
           <Header />
         </div>
@@ -122,7 +122,9 @@ const Watching = () => {
           <Header />
           <div className="pt-20 aspect-video pb-8 p-2 sm:px-10 md:px-32">
             <div className="video-container pt-10">
-            <h1 className="text-5xl font-bold text-balance">{movieData?.title}</h1>
+              <h1 className="text-5xl font-bold text-balance">
+                {movieData?.title}
+              </h1>
               <div className="go-back">
                 <FaArrowLeftLong
                   className="go-back-btn"
@@ -140,13 +142,19 @@ const Watching = () => {
             </div>
             <div className="flex flex-col md:flex-row items-center justify-between gap-20 max-w-6xl mx-auto">
               <div className="mb-4 md:mb-0">
-                <h2 className="text-5xl font-bold text-balance">{movieData?.title}</h2>
+                <h2 className="text-5xl font-bold text-balance">
+                  {movieData?.title}
+                </h2>
                 <p className="mt-2 text-lg">
                   {formatReleaseDate(movieData?.release_date)}
                 </p>
                 <p className="mt-4 text-lg">{movieData?.overview}</p>
               </div>
-              <img className="max-h-[600px] rounded-md" src={ORIGINAL_IMG_BASE_URL+movieData?.poster_path} alt="Poster Img" />
+              <img
+                className="max-h-[600px] rounded-md"
+                src={ORIGINAL_IMG_BASE_URL + movieData?.poster_path}
+                alt="Poster Img"
+              />
             </div>
           </div>
         </div>

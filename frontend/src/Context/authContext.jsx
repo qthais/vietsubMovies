@@ -1,7 +1,7 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(false);
-
+  const navigate = useNavigate();
   // Signup function
   const signup = async (credentials) => {
     setIsSigningUp(true);
@@ -64,6 +64,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error(err.message);
       setUser(null);
+      navigate("/login"); // Redirect if authentication fails
     } finally {
       setIsCheckingAuth(false);
     }
