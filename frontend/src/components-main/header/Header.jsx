@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import  { useRef, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
@@ -7,7 +7,6 @@ import { RiFilter3Line } from "react-icons/ri";
 import Button from "../button/Button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "../../Context/authContext";
-import movieApi from "../../api/movieApi";
 import { genres } from "../../api/movieApi";
 const headerNav = [
   {
@@ -164,7 +163,7 @@ const Header = () => {
                 onClick={() => setIsOpenProfileDropdown(!isOpenProfileDropdown)}
                 className="w-10 h-10 rounded-full overflow-hidden focus:outline-none"
               >
-                <img src={user?.image} alt="small user icon" />
+                <img src={user?.image} alt="user image" referrerPolicy="no-referrer"/>
               </button>
 
               {/* Dropdown menu */}

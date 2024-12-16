@@ -353,7 +353,7 @@ exports.findMoviesByManyGenres = async (genreNames) => {
     return {
       status: 500,
       success: false,
-      message: "An error occurred while retrieving movies",
+      message: err.message,
     };
   }
 };
@@ -448,7 +448,7 @@ exports.filterMovie = async (options) => {
     return {
       status: 500,
       success: false,
-      message: "An error occurred while retrieving movies: ",
+      message: err.message,
     };
   }
 };

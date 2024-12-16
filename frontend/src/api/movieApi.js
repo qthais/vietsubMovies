@@ -27,13 +27,13 @@ export const genres = [
 ];
 
 const movieApi = {
-  getMoviesList: (type, params) => {
+  getMoviesList: (type) => {
     const url = `/api/movie/${movieType[type]}`;
-    return axios.get(url, { params: params });
+    return axios.get(url);
   },
-  getTopRatedMovies: (params) => {
+  getTopRatedMovies: () => {
     const url = `/api/movie/top-rated`;
-    return axios.get(url, { params: params });
+    return axios.get(url);
   },
   getMovieDetails: (id) => {
     const url = `/api/movie/${id}/details`;

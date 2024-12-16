@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Bell, Search, Upload, Eye, EyeOff } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Upload, Eye, EyeOff } from "lucide-react";
 import Header from "../../components-main/header/Header";
 import { useAuth } from "../../Context/authContext";
 import axios from "axios";
@@ -10,8 +10,8 @@ const ProfileEdit = () => {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
   const [formData, setFormData] = useState({
-    username: user.username,
-    email: user.email,
+    username: user?.username,
+    email: user?.email,
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -78,7 +78,7 @@ const ProfileEdit = () => {
 
   const handlePasswordSwitch = () => setIsChangePassword((prev) => !prev);
   const hasChange = () => {
-    if(user.isGoogleAccount&&!user.password){
+    if(user?.isGoogleAccount&&!user?.password){
         return (
             formData.username !== user.username ||
             formData.email !== user.email ||
@@ -89,8 +89,8 @@ const ProfileEdit = () => {
           );
     }
     return (
-      formData.username !== user.username ||
-      formData.email !== user.email ||
+      formData.username !== user?.username ||
+      formData.email !== user?.email ||
       (formData.currentPassword &&
         formData.newPassword &&
         formData.confirmPassword) ||

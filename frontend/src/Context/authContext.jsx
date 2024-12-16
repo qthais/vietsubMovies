@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }) => {
       await axios.post("/api/auth/logout");
       setUser(null);
       toast.success("Logged out successfully");
+      navigate('/')
     } catch (err) {
       toast.error(err.response?.data?.message || "Logout failed");
     } finally {
