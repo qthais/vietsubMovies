@@ -11,13 +11,19 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { useDetail } from "../../Context/detailContext";
+import { useAuth } from "../../Context/authContext";
+import { useState } from "react";
+import movieApi from "../../api/movieApi";
+import toast from "react-hot-toast";
 
 
 const DetailHeader = ({ movie, credit }) => {
   const { averageRating, ratingCount } = useDetail();
   const id = movie.id;
   const genres = movie.genres ? movie.genres.map((genre) => genre.name) : [];
-
+  const {user}=useAuth()
+  const [isFavoriteMovie,setIsfavoriteMovie]=useState(user.favoriteMovies.find(m=>m==id))
+  console.log(user.favoriteMovies)
   // Tạo URL cho poster
   const poster = image_API.originalImage(
     movie.poster_path ? movie.poster_path : movie.backdrop_path
@@ -39,7 +45,15 @@ const DetailHeader = ({ movie, credit }) => {
   );
   // console.log("movie", writers);
   // console.log("dir", directors);
-
+  const handleLoveMovie= async(movieID)=>{
+    try{
+      const res=await movieApi.loveMovie(movieID)
+      toast.success(res.data.message)
+      setIsfavoriteMovie(!isFavoriteMovie)
+    }catch(err){
+      toast.error(err.response?.data?.message||"Failed!")
+    }
+  }
   return (
     <div
       className="detail-header-item flex flex-col sm:flex-row"
@@ -72,8 +86,8 @@ const DetailHeader = ({ movie, credit }) => {
               <FaFilm />
               Trailer
             </button>
-            <button className="Heart">
-              <FaHeart />
+            <button onClick={()=>{handleLoveMovie(id)}} className={`Heart ${isFavoriteMovie&&'bg-white'}`}>
+              <FaHeart className={isFavoriteMovie?'text-red-600 ':'text-white'} />
             </button>
           </div>
 
