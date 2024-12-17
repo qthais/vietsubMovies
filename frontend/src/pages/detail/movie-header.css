@@ -52,7 +52,7 @@
 }
 .detail-backdrop img {
   /* min-width: 400px; */
-  width: 450px;
+  width: 55vw;
   border-radius: var(--radius-20-video);
 }
 
@@ -173,19 +173,10 @@
   color: #ffffff;
 }
 .movie-info {
-  /* Frame 760 */
-  /* Avengers: Infinity War */
-
-  /* Auto layout */
-  top: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 2vh;
-  /* width: 70%; */
-  /* height: 348px; */
-  /* right: 0;
-  bottom: 0; */
   z-index: 10;
 }
 .score {

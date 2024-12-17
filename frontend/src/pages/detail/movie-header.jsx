@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import "./movie-header.css";
 import { useNavigate } from "react-router-dom";
 import { image_API } from "../../api/apiConfig";
@@ -9,14 +8,13 @@ import {
   FaHeart,
   FaPlay,
   FaFilm,
-  FaStar,
-  FaStarHalfAlt,
-  FaRegStar,
   FaUser,
 } from "react-icons/fa";
-import axios from "axios";
+import { useDetail } from "../../Context/detailContext";
+
 
 const DetailHeader = ({ movie, credit }) => {
+  const { averageRating, ratingCount } = useDetail();
   const id = movie.id;
   const genres = movie.genres ? movie.genres.map((genre) => genre.name) : [];
 
@@ -44,10 +42,10 @@ const DetailHeader = ({ movie, credit }) => {
 
   return (
     <div
-      className="detail-header-item"
+      className="detail-header-item flex flex-col sm:flex-row"
       style={{ backgroundImage: `url(${backdrop})` }}
     >
-      <div className="detail-backdrop">
+      <div className="hidden lg:flex detail-backdrop">
         <img src={poster} alt={`${movie.title} poster`} />
       </div>
       <div className="frame1">
@@ -81,8 +79,8 @@ const DetailHeader = ({ movie, credit }) => {
 
           <div className="score">
             <div className="rate-button">
-              <div className="avgRate">{movie.averageRating}</div>{" "}
-              <div>({movie.ratingCount})</div>
+              <div className="avgRate">{averageRating}</div>{" "}
+              <div>({ratingCount})</div>
             </div>
             <div></div>
             <div className="total-views">

@@ -4,7 +4,6 @@ import SwiperCore from "swiper";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "react-loading-skeleton/dist/skeleton.css";
 import "./hero-slide.css";
 import movieApi, { movieType } from "../../api/movieApi";
 import { image_API } from "../../api/apiConfig";

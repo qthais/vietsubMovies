@@ -1,32 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import "./rateMovieFunct.css";
 import movieApi from "../../api/movieApi";
+import { useAuth } from "../../Context/authContext";
+import { useDetail } from "../../Context/detailContext";
 
 const Rating = () => {
   const { id } = useParams();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
-  const [averageRating, setAverageRating] = useState(null);
-  const [ratingCount, setRatingCount] = useState(0);
+  const {setRatingCount,setAverageRating}=useDetail()
   const [hasRated, setHasRated] = useState(false);
-
-  useEffect(() => {
-    const fetchMovieRating = async () => {
-      try {
-        const response = await movieApi.getMovieDetails(id);
-        console.log("Fetched data:", response.data);
-        setAverageRating(response.data.averageRating);
-        setRatingCount(response.data.ratingCount);
-      } catch (error) {
-        console.error("Error fetching movie rating:", error);
-      }
-    };
-    fetchMovieRating();
-  }, [id]);
-
+  const {user}=useAuth()
+  useEffect(()=>{
+    const initialRating=user.ratings.find((movie)=>movie.movieId==id)?.rate
+    if(initialRating){
+      setRating(initialRating)
+      setHasRated(true)
+    }
+  },[user,id])
   const handleRating = async (ratingValue) => {
     try {
       const response = await movieApi.rateMovie(id, ratingValue);

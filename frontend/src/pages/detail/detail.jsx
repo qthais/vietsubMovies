@@ -1,42 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"; // Import useHistory
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"; // Import useHistory
 import DetailHeader from "./movie-header";
 import Cast from "./cast";
 import movieApi from "../../api/movieApi";
-import { image_API } from "../../api/apiConfig";
-import Rating from "./rateMovieFunct";
 import Header from "../../components-main/header/Header";
-
+import { useDetail } from "../../Context/detailContext";
 const Detail = () => {
-  const { id } = useParams(); // Get id from URL
-  const navigate = useNavigate(); // Initialize navigate
-  const [movie, setMovie] = useState(null); // Initialize state as null
-  const [credit, setCredit] = useState(null); // Initialize state as null
-  const [background, setBackground] = useState(null);
+  const { id } = useParams(); 
+  const [movie, setMovie] = useState(null); 
+  const [credit, setCredit] = useState(null); 
+  const {setRatingCount,setAverageRating}=useDetail()
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        // Call the API to fetch movie details and credits
         const response = await movieApi.getMovieDetails(id);
-        setMovie(response.data.content); // Update state with movie data
-        setCredit(response.data.content.credit); // Update state with credit data
-        setBackground(
-          image_API.originalImage(
-            response.data.content.backdrop_path ||
-              response.data.content.poster_path
-          )
-        );
-        console.log("Fetched data:", response.data); // Log the fetched data
+        setMovie(response.data.content); 
+        setCredit(response.data.content.credit); 
+        setAverageRating(response.data.content.averageRating);
+        setRatingCount(response.data.content.ratingCount);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchMovieDetails();
-  }, [id]); // Run the effect only when id changes
+  }, [id]); 
 
-  // Render the component style={{ backgroundImage: `url(${background})`,}}
   if (!movie && !credit)
     return (
       <div className="h-screen text-white relatvie">
@@ -57,7 +46,7 @@ const Detail = () => {
       <DetailHeader movie={movie} credit={credit}></DetailHeader>
 
       {/* Cast */}
-      <div className="container">
+      <div className="mx-10">
         <Cast credit={credit}></Cast>
       </div>
     </div>

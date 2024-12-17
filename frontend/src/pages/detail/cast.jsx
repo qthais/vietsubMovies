@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react"; // Import đúng các compon
 
 const Cast = ({ credit }) => {
   const [cast, setCast] = useState([]);
-  const slidesPerView = cast.length > 6 ? 6 : 3;
+  const slidesPerView = 6
 
   useEffect(() => {
     if (credit && credit.casts) {
@@ -19,23 +19,8 @@ const Cast = ({ credit }) => {
       <h1>Casts</h1>
       <div className="Casts">
         <Swiper
-          spaceBetween={30}
+          spaceBetween={0}
           slidesPerView={slidesPerView} // Set the number of slides per view
-          loop={true}
-          breakpoints={{
-            640: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 40,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 50,
-            },
-          }}
         >
           {cast.length > 0 ? (
             cast.map((member, index) => (

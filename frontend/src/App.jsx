@@ -21,6 +21,7 @@ import HomeScreenCheck from "./pages/home/HomeScreenCheck";
 import Logitech from "./pages/auth/login/logitech";
 import { Loader } from "lucide-react";
 import { useAuth } from "./Context/authContext";
+import DetailMain from "./pages/detail/DetailMain";
 
 function App() {
   const { user, isCheckingAuth, authCheck } = useAuth();
@@ -67,7 +68,7 @@ function App() {
         />
         <Route
           path="/detail/:id"
-          element={ <Detail /> }
+          element={ <DetailMain /> }
         />
         <Route
           path="/search"
