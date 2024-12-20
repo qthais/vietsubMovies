@@ -89,7 +89,7 @@ const HeroSlideItem = (props) => {
     >
       <div className="hero-slide_item_content container">
         <div className="hero-slide_item_content_info">
-          <h2 className="title">{item.title}</h2>
+          <h2 className="title text-3xl sm:text-7xl">{item.title}</h2>
           <div className="rate">
             <p className="hero-rating">
               {item.averageRating} ({item.ratingCount})
@@ -98,7 +98,7 @@ const HeroSlideItem = (props) => {
             <p className="hero-views"> {item.view} </p>
             <FaUser />
           </div>
-          <p className="line-clamp-3 overview">{item.overview}</p>
+          <p className="line-clamp-3 overview sm:text-[18px]">{item.overview}</p>
           <div className="btns">
             <Button onClick={() => navigate(`/watching/${item.id}/full-time`)}>
               Watch Now

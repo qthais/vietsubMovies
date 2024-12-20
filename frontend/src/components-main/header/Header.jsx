@@ -1,4 +1,4 @@
-import  { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
@@ -8,6 +8,8 @@ import Button from "../button/Button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "../../Context/authContext";
 import { genres } from "../../api/movieApi";
+import { Menu } from "lucide-react";
+import Sidebar from "../sidebar/sidebar";
 const headerNav = [
   {
     display: "Movies",
@@ -28,9 +30,12 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isOpenProfileDropdown, setIsOpenProfileDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const profileRed = useRef(null);
+  const openSidebar = () => setSidebarOpen(true);
+  const closeSidebar = () => setSidebarOpen(false);
 
   // Dropdown for profile
   useEffect(() => {
@@ -129,7 +134,13 @@ const Header = () => {
   };
 
   return (
-    <div ref={headerRef} className="header">
+    <div ref={headerRef} className="header flex items-center">
+      <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+      <button
+      onClick={openSidebar}
+      >
+        <Menu className="sm:ml-10 ml-12 size-12" />
+      </button>
       <div className="header_wrap container">
         {/* Logo */}
         <div className="logo">
@@ -137,9 +148,11 @@ const Header = () => {
         </div>
         {/* Navigation and Search */}
         <ul className="header_nav">
-          {user?.role=='admin'&&(<li>
-            <Link to='/admin'>Admin</Link>
-          </li>)}
+          {user?.role == "admin" && (
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+          )}
           {headerNav.map((item, index) => (
             <li key={index} className={`${index === active ? "active" : ""}`}>
               <Link to={item.path}>{item.display}</Link>
@@ -154,7 +167,6 @@ const Header = () => {
               onClick={() => setShowSearch(true)}
             />
           </li>
-
           {/* User profile icon */}
           <li>
             <div className="profile-icon">
@@ -163,7 +175,11 @@ const Header = () => {
                 onClick={() => setIsOpenProfileDropdown(!isOpenProfileDropdown)}
                 className="w-10 h-10 rounded-full overflow-hidden focus:outline-none"
               >
-                <img src={user?.image} alt="user image" referrerPolicy="no-referrer"/>
+                <img
+                  src={user?.image}
+                  alt="user image"
+                  referrerPolicy="no-referrer"
+                />
               </button>
 
               {/* Dropdown menu */}
@@ -195,7 +211,7 @@ const Header = () => {
                     {/* Logout button */}
                     <button
                       className="w-full flex items-center px-4 py-3 text-left text-white hover:bg-[#2d2d2d] rounded-lg transition-colors"
-                      onClick={async() => {
+                      onClick={async () => {
                         await logout();
                         setIsOpenProfileDropdown(false);
                       }}

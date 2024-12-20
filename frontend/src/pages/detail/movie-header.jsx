@@ -23,8 +23,6 @@ const DetailHeader = ({ movie, credit }) => {
   const genres = movie.genres ? movie.genres.map((genre) => genre.name) : [];
   const {user}=useAuth()
   const [isFavoriteMovie,setIsfavoriteMovie]=useState(user.favoriteMovies.find(m=>m==id))
-  console.log(user.favoriteMovies)
-  // Tạo URL cho poster
   const poster = image_API.originalImage(
     movie.poster_path ? movie.poster_path : movie.backdrop_path
   );

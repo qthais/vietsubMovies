@@ -65,12 +65,12 @@
 
 .hero-slide_item_content_info .title {
   font-family: "Montserrat", sans-serif;
-  font-size: 5rem;
+  /* font-size: 5rem; */
   font-weight: 600;
 }
 
 .hero-slide_item_content_info .overview {
-  font-size: 18px;
+  /* font-size: 18px; */
   font-weight: 300;
 }
 

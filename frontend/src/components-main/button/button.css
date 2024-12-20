@@ -31,14 +31,4 @@ button {
   background-color: var(--background-color-white-30);
   color: var(--color-accent-1-1st-white);
   padding: 10px 21px;
-  font-size: 20px;
-  /* transition: all 0.3s ease; */
-
-  /* width: 100%; */
-  /* overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; */
 }
