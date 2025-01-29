@@ -7,7 +7,7 @@ export default defineConfig({
   server:{
     proxy:{
       "/api":{
-        target:"http://localhost:3000",
+        target:"http://BackEnd:3000",
         changeOrigin: true,
         timeout:5000,
       }

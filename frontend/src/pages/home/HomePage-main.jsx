@@ -1,6 +1,6 @@
 
 
-import "./homePage-main.css";
+import "./homepage-main.css";
 import Header from "../../components-main/header/Header";
 import HeroSlide from "../../components-main/hero-slide/HeroSlide";
 import MovieList from "../../components-main/movie-list/MovieList";

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Dropdown.css";
+import "./DropDown.css";
 import { TiTick } from "react-icons/ti";
 import { AiFillCloseSquare } from "react-icons/ai";
 const SearchDropdown = ({

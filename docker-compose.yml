@@ -1,35 +1,27 @@
 version: '3.8'
 services:
-  # backend:
-  #   build: ./BackEnd
-  #   container_name: node-app
-  #   restart: unless-stopped
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     MONGO_URI: mongodb://mongo:27017/mydatabase
-  #   depends_on:
-  #     - mongo
-  #   volumes:
-  #     - ./BackEnd:/src   # Sync the local BackEnd directory to the /src directory inside the container
-  #     - /app/node_modules  # Prevent node_modules from being overwritten by the local directory
-  #   networks:
-  #     - node-network
-
-  mongo:
-    image: mongo:latest
-    container_name: mongo
+  frontend:
+    build: ./frontend  
+    container_name: frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true  
     restart: unless-stopped
     ports:
-      - "27018:27017"
+      - "5173:5173" 
+
+  backend:
+    build: ./BackEnd
+    container_name: BackEnd
     volumes:
-      - mongo-data:/data/db  # Use the named volume defined below
-    networks:
-      - node-network
+      - ./BackEnd:/app  
+      - /app/node_modules  
+    environment:
+      - CHOKIDAR_USEPOLLING=true  
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
 
-volumes:
-  mongo-data:  # Define the named volume here
 
-networks:
-  node-network:
-    driver: bridge

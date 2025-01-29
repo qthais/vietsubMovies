@@ -1,4 +1,5 @@
 
+
 # 🚀Cinestream
 This project is a wonderful platform like phimmoi and animevietsub, allowing users to enjoy pirate movies without any charge. Users can browse, search, and watch movies with features like user authentication, profile management, and detailed movie information. In addition, users can also rate, and like, and the admin can filter out the appropriate movies for users,..
 
@@ -229,5 +230,6 @@ For any queries, reach out via [thaiallb63@gmail.com](thaiallb63@gmail.com).
 
 ---
 
-Enjoy exploring CheStream! 🍿
+Enjoy exploring CinesStream! 🍿
 ```
+

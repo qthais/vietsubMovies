@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error(err.message);
       setUser(null);
-      navigate("/login"); // Redirect if authentication fails
+      navigate("/"); // Redirect if authentication fails
     } finally {
       setIsCheckingAuth(false);
     }
