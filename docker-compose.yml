@@ -3,6 +3,11 @@ services:
   frontend:
     build: ./frontend  
     container_name: frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true  
     restart: unless-stopped
     ports:
       - "5173:5173" 
@@ -10,6 +15,11 @@ services:
   backend:
     build: ./BackEnd
     container_name: BackEnd
+    volumes:
+      - ./BackEnd:/app  
+      - /app/node_modules  
+    environment:
+      - CHOKIDAR_USEPOLLING=true  
     restart: unless-stopped
     ports:
       - "3000:3000"

@@ -1,7 +1,7 @@
 # Use the official Node.js LTS version as a base image
 FROM node:18-alpine
 
-WORKDIR /BackEnd
+WORKDIR /app
 
 COPY package*.json ./
 
