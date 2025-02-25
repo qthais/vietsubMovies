@@ -58,9 +58,7 @@ export const AuthProvider = ({ children }) => {
   const authCheck = async () => {
     setIsCheckingAuth(true);
     try {
-      const response = await axios.get("/api/auth/authCheck", {
-        withCredentials: true,
-      });
+      const response = await axios.get("/api/auth/authCheck");
       setUser(response.data.user);
     } catch (err) {
       console.error(err.message);
