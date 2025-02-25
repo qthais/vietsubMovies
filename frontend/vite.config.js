@@ -7,7 +7,7 @@ export default defineConfig({
   server:{
     proxy:{
       "/api":{
-        target:"http://BackEnd:3000",
+        target:"https://vietsubmovies.onrender.com",
         changeOrigin: true,
         timeout:5000,
       }
