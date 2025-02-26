@@ -3,11 +3,11 @@ import Header from "../../components-main/header/Header";
 import "./AdminDashboard.css";
 import MovieCard from "../../components-main/movie-card/MovieCard";
 import { useGetAllMovies } from "../../hooks/getTrendingContent";
-import axios from "axios";
 import toast from "react-hot-toast";
 import ReactPaginate from "react-paginate";
 import { Edit } from "lucide-react";
 import EditMovieModal from "../../components-main/admin/editModal";
+import axiosClient from "../../api/axiosClient";
 
 const AdminDashboard = () => {
   const { allMovies, setAllMovies } = useGetAllMovies();
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
   }, []);
   const handleReleased = async (movieID) => {
     try {
-      const response = await axios.get(`/api/movie/${movieID}/toggleRelease`);
+      const response = await axiosClient.get(`/api/movie/${movieID}/toggleRelease`);
       const updatedMovie = response.data.content;
 
       setAllMovies((prevMovies) =>
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
     try {
       const updateData = { ...currentEditMovie };
       delete updateData._id;
-      const response = await axios.post(
+      const response = await axiosClient.post(
         `/api/movie/${movieId}/update`,
         updateData
       );

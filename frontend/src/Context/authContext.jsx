@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../api/axiosClient";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (credentials) => {
     setIsSigningUp(true);
     try {
-      const response = await axios.post("/api/auth/signup", credentials);
+      const response = await axiosClient.post("/api/auth/signup", credentials);
       setUser(response.data.user);
       toast.success("Signup successfully");
     } catch (err) {
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     setIsLoggingIn(true);
     try {
-      const response = await axios.post("/api/auth/login", credentials);
+      const response = await axiosClient.post("/api/auth/login", credentials);
       setUser(response.data.user);
       toast.success("Login successfully");
     } catch (err) {
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setIsLoggingOut(true);
     try {
-      await axios.post("/api/auth/logout");
+      await axiosClient.post("/api/auth/logout");
       setUser(null);
       toast.success("Logged out successfully");
       navigate('/')
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
   const authCheck = async () => {
     setIsCheckingAuth(true);
     try {
-      const response = await axios.get("/api/auth/authCheck");
+      const response = await axiosClient.get("/api/auth/authCheck");
       setUser(response.data.user);
     } catch (err) {
       console.error(err.message);

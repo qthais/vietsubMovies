@@ -1,4 +1,5 @@
-import axios from "axios";
+import axiosClient from "./axiosClient";
+
 
 export const movieType = {
   trending: "trending",
@@ -29,29 +30,29 @@ export const genres = [
 const movieApi = {
   getMoviesList: (type) => {
     const url = `/api/movie/${movieType[type]}`;
-    return axios.get(url);
+    return axiosClient.get(url);
   },
   getTopRatedMovies: () => {
     const url = `/api/movie/top-rated`;
-    return axios.get(url);
+    return axiosClient.get(url);
   },
   getMovieDetails: (id) => {
     const url = `/api/movie/${id}/details`;
-    return axios.get(url);
+    return axiosClient.get(url);
   },
 
   getMoviesByCategory: (cate) => {
     const url = `/api/movie/${cate}/category`;
-    return axios.get(url, { cate });
+    return axiosClient.get(url, { cate });
   },
   getMoviesByOption: (option) => {
     const url = `/api/movie/options`;
-    return axios.post(url, option);
+    return axiosClient.post(url, option);
   },
 
   searchMovie: (movieName) => {
     const url = `/api/search/movie`;
-    return axios.get(url, {
+    return axiosClient.get(url, {
       params: {
         name: movieName,
       },
@@ -59,26 +60,26 @@ const movieApi = {
   },
   rateMovie: (id, rating) => {
     const url = `/api/movie/${id}/rate`;
-    return axios.patch(url, { rating });
+    return axiosClient.patch(url, { rating });
   },
 
   loveMovie: (id) => {
     const url = `/api/movie/${id}/favorite`;
-    return axios.post(url);
+    return axiosClient.post(url);
   },
   searchPerson: (personName) => {
     const url = `/api/search/person`;
-    return axios.get(url, {
+    return axiosClient.get(url, {
       params: {
         name: personName,
       },
     });
   },
   toggleReleased:(movieId)=>{
-    return axios.get(`/api/movie/${movieId}/toggleRelease`);
+    return axiosClient.get(`/api/movie/${movieId}/toggleRelease`);
   },
   updateMovie:(movieId,UpdateBody)=>{
-    return axios.post(`/api/movie/${movieId}/update`,UpdateBody)
+    return axiosClient.post(`/api/movie/${movieId}/update`,UpdateBody)
   }
 };
 

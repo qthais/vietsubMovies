@@ -7,9 +7,9 @@ import Header from "../../components-main/header/Header";
 import { useAuth } from "../../Context/authContext";
 import toast from "react-hot-toast";
 import { Edit } from "lucide-react";
-import axios from "axios";
 import EditMovieModal from "../../components-main/admin/editModal";
 import ReactPaginate from "react-paginate";
+import axiosClient from "../../api/axiosClient";
 const Search = () => {
   const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -56,7 +56,7 @@ const Search = () => {
     try {
       const updateData = { ...currentEditMovie };
       delete updateData._id;
-      const response = await axios.post(
+      const response = await axiosClient.post(
         `/api/movie/${movieId}/update`,
         updateData
       );

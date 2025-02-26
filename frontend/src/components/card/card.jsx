@@ -2,7 +2,7 @@ import React from "react";
 import "./card.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosClient from "../../api/axiosClient";
 const Card = ({ title, id, thumbnail, rating, views }) => {
   const [genres, setGenres] = useState([]);
   const [averageRating, setAverageRating] = useState(null);
@@ -10,7 +10,7 @@ const Card = ({ title, id, thumbnail, rating, views }) => {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await axios.get(`/api/movie/${id}/details`);
+        const response = await axiosClient.get(`/api/movie/${id}/details`);
         const fetchedGenres = response.data.content.genres; // Ensure this is the correct path
         setGenres(fetchedGenres); // Update state with fetched data
         // console.log("Fetched data:", response.data.content);

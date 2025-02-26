@@ -1,13 +1,14 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./watching.css";
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Header from "../../components-main/header/Header";
 import { formatReleaseDate } from "../../utils/DateFunction";
 import { ORIGINAL_IMG_BASE_URL } from "../../utils/constant";
 import { useAuth } from "../../Context/authContext";
+import axiosClient from "../../api/axiosClient";
 const Watching = () => {
   const { id, type } = useParams(); //watching/:id or watching/:id/:type
   const [videoLink, setVideoLink] = useState([]);
@@ -44,7 +45,7 @@ const Watching = () => {
     const getLink = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`/api/movie/${id}/details`);
+        const response = await axiosClient.get(`/api/movie/${id}/details`);
         setMovieData(response.data.content);
         increaseViewCount(response.data.content);
 
@@ -87,7 +88,7 @@ const Watching = () => {
   // increase view count
   const increaseViewCount = async (movieDetail) => {
     try {
-      await axios.get(`/api/movie/${id}/view`);
+      await axiosClient.get(`/api/movie/${id}/view`);
       const updatedViewHistory = user.viewHistory.filter(
         (item) => item._id !== movieDetail?._id
       );

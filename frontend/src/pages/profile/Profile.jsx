@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Upload, Eye, EyeOff } from "lucide-react";
 import Header from "../../components-main/header/Header";
 import { useAuth } from "../../Context/authContext";
-import axios from "axios";
+
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../../api/axiosClient";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const ProfileEdit = () => {
         data.append("currentPassword", formData.currentPassword);
         data.append("newPassword", formData.newPassword);
         if (formData.image) data.append("image", formData.image);
-        const res = await axios.put("/api/user/profile", data, {
+        const res = await axiosClient.put("/api/user/profile", data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setUser(res.data.user);
