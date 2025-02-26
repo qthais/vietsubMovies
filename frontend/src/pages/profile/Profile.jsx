@@ -22,7 +22,11 @@ const ProfileEdit = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState(user?.image);
+  const [profileImage, setProfileImage] = useState(
+    user?.image?.startsWith("/api")
+      ? `${import.meta.env.VITE_API_BASE_URL}${user.image}`
+      : user.image
+  );
   const [isChangePassword, setIsChangePassword] = useState(false);
   useEffect(() => {
     if (!isChangePassword) {
@@ -79,15 +83,13 @@ const ProfileEdit = () => {
 
   const handlePasswordSwitch = () => setIsChangePassword((prev) => !prev);
   const hasChange = () => {
-    if(user?.isGoogleAccount&&!user?.password){
-        return (
-            formData.username !== user.username ||
-            formData.email !== user.email ||
-            (
-              formData.newPassword &&
-              formData.confirmPassword) ||
-            formData.image
-          );
+    if (user?.isGoogleAccount && !user?.password) {
+      return (
+        formData.username !== user.username ||
+        formData.email !== user.email ||
+        (formData.newPassword && formData.confirmPassword) ||
+        formData.image
+      );
     }
     return (
       formData.username !== user?.username ||

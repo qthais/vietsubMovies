@@ -176,7 +176,9 @@ const Header = () => {
                 className="w-10 h-10 rounded-full overflow-hidden focus:outline-none"
               >
                 <img
-                  src={user?.image}
+                  src={user?.image?.startsWith("/api") 
+                    ? `${import.meta.env.VITE_API_BASE_URL}${user.image}` 
+                    : user.image}
                   alt="user image"
                   referrerPolicy="no-referrer"
                 />
