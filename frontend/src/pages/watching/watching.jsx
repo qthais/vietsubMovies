@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./watching.css";
-
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Header from "../../components-main/header/Header";

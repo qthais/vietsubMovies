@@ -11,6 +11,7 @@ router.post("/:id/rate",MovieController.HandleTestRateMovie)
 router.delete("/:id/delete",adminRoute,MovieController.deleteMovie)
 router.post("/create",MovieController.generateMovies)
 router.post("/:id/favorite",MovieController.handleLoveMovie)
+router.get("/type",MovieController.getMoviesByType)
 router.get("/:id/details",MovieController.getMovieDetails)
 router.post("/options",MovieController.getMovieByOptions)
 // router.get("/:query/category", MovieController.getMoviesByCategory);

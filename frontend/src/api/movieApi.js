@@ -32,6 +32,10 @@ const movieApi = {
     const url = `/api/movie/${movieType[type]}`;
     return axiosClient.get(url);
   },
+  getMoviesListByType: (type) => {
+    const url = `/api/movie/type?category=${movieType[type]}`;
+    return axiosClient.get(url);
+  },
   getTopRatedMovies: () => {
     const url = `/api/movie/top-rated`;
     return axiosClient.get(url);

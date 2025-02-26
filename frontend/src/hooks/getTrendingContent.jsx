@@ -26,5 +26,17 @@ const useGetAllMovies=()=>{
     }, [])
     return {allMovies,setAllMovies}
 }
+const useGetMoviesByType= (category)=>{
+    const [movies, setMovies] = useState([])
 
-export {useGetTrendingContent,useGetAllMovies}
+    useEffect(() => {
+        const getAllMovies = async () => {
+            const res = await axiosClient.get(`/api/movie/type?category=${category}`)
+            setMovies(res.data.content)
+        }
+        getAllMovies()
+    }, [])
+    return {movies,setMovies}
+}
+
+export {useGetTrendingContent,useGetAllMovies,useGetMoviesByType}

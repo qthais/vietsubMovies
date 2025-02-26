@@ -22,6 +22,7 @@ import Logitech from "./pages/auth/login/logitech";
 import { Loader } from "lucide-react";
 import { useAuth } from "./Context/authContext";
 import DetailMain from "./pages/detail/DetailMain";
+import Explore from "./pages/Explore";
 
 function App() {
   const { user, isCheckingAuth, authCheck } = useAuth();
@@ -58,26 +59,12 @@ function App() {
           path="/login"
           element={!user ? <Logitech /> : <Navigate to="/" />}
         />
-        <Route
-          path="/watching/:id/:type"
-          element={ <Watching />}
-        />
-        <Route
-          path="/movie/:id/rate"
-          element={ <Rating /> }
-        />
-        <Route
-          path="/detail/:id"
-          element={ <DetailMain /> }
-        />
-        <Route
-          path="/search"
-          element={ <Search /> }
-        />
-        <Route
-          path="/edit-profile"
-          element={ <ProfileEdit /> }
-        />
+        <Route path="/watching/:id/:type" element={<Watching />} />
+        <Route path="/movie/type" element={<Explore />} />
+        <Route path="/movie/:id/rate" element={<Rating />} />
+        <Route path="/detail/:id" element={<DetailMain />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/edit-profile" element={<ProfileEdit />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
       <Footer />
