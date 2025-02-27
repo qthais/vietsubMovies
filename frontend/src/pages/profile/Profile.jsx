@@ -24,8 +24,8 @@ const ProfileEdit = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(
     user?.image?.startsWith("/api")
-      ? `${import.meta.env.VITE_API_BASE_URL}${user.image}`
-      : user.image
+      ? `${import.meta.env.VITE_API_BASE_URL}${user?.image}`
+      : user?.image
   );
   const [isChangePassword, setIsChangePassword] = useState(false);
   useEffect(() => {

@@ -177,8 +177,8 @@ const Header = () => {
               >
                 <img
                   src={user?.image?.startsWith("/api") 
-                    ? `${import.meta.env.VITE_API_BASE_URL}${user.image}` 
-                    : user.image}
+                    ? `${import.meta.env.VITE_API_BASE_URL}${user?.image}` 
+                    : user?.image}
                   alt="user image"
                   referrerPolicy="no-referrer"
                 />
