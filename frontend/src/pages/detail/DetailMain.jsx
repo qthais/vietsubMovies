@@ -1,4 +1,3 @@
-import React from 'react'
 import { DetailProvider } from '../../Context/detailContext'
 import Detail from './detail'
 

@@ -617,11 +617,11 @@ exports.findMovieDetail = async (id) => {
 };
 exports.findMovieByCategory= async(category)=>{
   if(category=='popular'){
-    return exports.fetchPopularMovies(50)
+    return exports.fetchPopularMovies(0)
   }else if(category=='trending'){
-    return exports.fetchTrendingMovie(50)
+    return exports.fetchTrendingMovie(0)
   }else if(category=='top_rated'){
-    return exports.fetchTopRatedMovies(50)
+    return exports.fetchTopRatedMovies(0)
   }
 }
 exports.rateMovie = async (id, rating, userId) => {
@@ -727,7 +727,9 @@ exports.fetchTopRatedMovies = async (limit) => {
       "genres"
     );
     allMovies.sort((a, b) => b.averageRating - a.averageRating);
-
+    if(limit==0){ 
+      return allMovies
+    }
     // Limit the result to 15 movies
     return (topRatedMovies = allMovies.slice(0, limit??15));
   } catch (err) {

@@ -8,7 +8,6 @@ import Header from "../components-main/header/Header";
 import MovieCard from "../components-main/movie-card/MovieCard";
 import EditMovieModal from "../components-main/admin/editModal";
 import axiosClient from "../api/axiosClient";
-import movieApi from "../api/movieApi";
 import { useGetMoviesByType } from "../hooks/getTrendingContent";
 
 const Explore = () => {
@@ -20,7 +19,7 @@ const Explore = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEditMovie, setCurrentEditMovie] = useState({});
   const itemsPerPage = 12;
-  const user = useAuth();
+  const { user } = useAuth();
   useEffect(() => {
     const updatePageRange = () => {
       const width = window.innerWidth;
@@ -120,37 +119,35 @@ const Explore = () => {
         {currentMovies.map((movie) => (
           <div className="movieCard" key={movie._id}>
             <MovieCard item={movie} />
-            <div className="mt-5 flex justify-between">
-              {user.role == "admin" && (
-                <div className="mt-5 flex justify-between">
-                  {movie.isPublished ? (
-                    <button
-                      onClick={() => handleReleased(movie._id)}
-                      className={
-                        "text-xs bg-green-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
-                      }
-                    >
-                      Released
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleReleased(movie._id)}
-                      className={
-                        "text-xs bg-red-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
-                      }
-                    >
-                      Unreleased
-                    </button>
-                  )}
+            {user?.role == "admin" && (
+              <div className="mt-5 flex justify-between">
+                {movie.isPublished ? (
                   <button
-                    onClick={() => handleEditClick(movie)}
-                    className="flex items-center text-xs bg-first-blue rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                    onClick={() => handleReleased(movie._id)}
+                    className={
+                      "text-xs bg-green-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                    }
                   >
-                    Update <Edit className="ml-1 size-4" />
+                    Released
                   </button>
-                </div>
-              )}
-            </div>
+                ) : (
+                  <button
+                    onClick={() => handleReleased(movie._id)}
+                    className={
+                      "text-xs bg-red-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                    }
+                  >
+                    Unreleased
+                  </button>
+                )}
+                <button
+                  onClick={() => handleEditClick(movie)}
+                  className="flex items-center text-xs bg-first-blue rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                >
+                  Update <Edit className="ml-1 size-4" />
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>

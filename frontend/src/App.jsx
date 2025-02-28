@@ -9,7 +9,6 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import Watching from "./pages/watching/watching";
-import Detail from "./pages/detail/detail";
 import AdminDashboard from "./pages/home/AdminDashboard";
 import Search from "./pages/search/search";
 import ProfileEdit from "./pages/profile/Profile";

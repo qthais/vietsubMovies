@@ -1,8 +1,7 @@
-import React from "react";
+
 import { useParams, useNavigate } from "react-router-dom";
 import "./watching.css";
 import { useEffect, useState } from "react";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import Header from "../../components-main/header/Header";
 import { formatReleaseDate } from "../../utils/DateFunction";
 import { ORIGINAL_IMG_BASE_URL } from "../../utils/constant";
@@ -123,7 +122,7 @@ const Watching = () => {
           <Header />
           <div className="pt-20 aspect-video pb-8 p-2 sm:px-10 md:px-32">
             <div className="video-container pt-10">
-              <h1 className="text-5xl font-bold text-balance">
+              <h1 className="md:text-5xl text-3xl mx-auto mt-6 max-w-[1000px] font-bold text-balance">
                 {movieData?.title}
               </h1>
               <div className="go-back">
@@ -141,7 +140,7 @@ const Watching = () => {
                 height={iframeDimensions.height}
               />
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-20 max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between mt-[50px] gap-20 max-w-6xl mx-auto">
               <div className="mb-4 md:mb-0">
                 <h2 className="text-5xl font-bold text-balance">
                   {movieData?.title}
