@@ -35,7 +35,7 @@ const useGetMoviesByType= (category)=>{
             setMovies(res.data.content)
         }
         getAllMovies()
-    }, [])
+    }, [category])
     return {movies,setMovies}
 }
 
