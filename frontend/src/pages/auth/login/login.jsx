@@ -3,12 +3,15 @@ import { useAuth } from "../../../Context/authContext";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"
 const LoginPage = () => {
+  const [isLogin,setIsLogin]=useState(false)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
-    login({ email, password });
+    setIsLogin(true)
+    await login({ email, password });
+    setIsLogin(false)
   };
   return (
     <div className="card border-transparent p-7 gap-5 max-w-md w-full relative bg-black/50 rounded-[40px] backdrop-blur-[20px] overflow-hidden">
@@ -60,7 +63,7 @@ const LoginPage = () => {
               className="w-[212px] h-[38.5px] py-2 bg-first-blue text-white font-normal rounded-md 
                         hover:bg-white hover:text-second-blue"
             >
-              Login
+              {isLogin?'Logging in ...':'Login'}
             </button>
             <label className="flex justify-center items-center text-sm font-medium text-gray-300 mb-1">
               or
