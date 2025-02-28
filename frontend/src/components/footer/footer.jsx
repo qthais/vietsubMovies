@@ -12,7 +12,7 @@ const Footer = () => {
 					</a>
 					. The source code is available on{" "}
 					<a
-						href='https://github.com/BrandyTr/Video-Streaming-Database'
+						href='https://github.com/qthais/vietsubMovies.git'
 						target='_blank'
 						rel='noreferrer'
 						className='font-medium underline underline-offset-4'
