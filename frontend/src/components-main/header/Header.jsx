@@ -22,7 +22,7 @@ const Header = () => {
   const { pathname } = useLocation();
 
   const headerRef = useRef(null);
-
+  const [isLogOut,setIsLogOut]=useState(false)
   const [movies, setMovies] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -214,12 +214,14 @@ const Header = () => {
                     <button
                       className="w-full flex items-center px-4 py-3 text-left text-white hover:bg-[#2d2d2d] rounded-lg transition-colors"
                       onClick={async () => {
+                        setIsLogOut(true)
                         await logout();
+                        setIsLogOut(false)
                         setIsOpenProfileDropdown(false);
                       }}
                     >
                       <LogOut className="w-6 h-6 mr-3 text-gray-400" />
-                      <span className="text-lg font-medium">Log out</span>
+                      <span className="text-lg font-medium">{isLogOut?'Logging out ..':'Logout'}</span>
                     </button>
                   </div>
                 </div>

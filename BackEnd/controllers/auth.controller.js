@@ -51,7 +51,7 @@ class authController {
         try{
             res.clearCookie("jwt", {
                 httpOnly: true,
-                sameSite: "None",
+                sameSite: ENV_VARS.MODE=='production'?'None':'Strict',
                 secure: ENV_VARS.MODE !== "development", // Ensure same flags as when setting
             });
             res.status(200).json({
