@@ -57,7 +57,7 @@ const AuthScreen = () => {
           </div>
           <div className="flex-1 mt-4 relative">
             <img className='relative z-10' src="/tv.png" alt="tv image" />
-            <video className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[56%]' src="hero-vid.m4v" type='video/mp4'
+            <video className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[56%]' src="/hero-vid.m4v" type='video/mp4'
               playsInline
               muted
               loop
@@ -107,7 +107,7 @@ const AuthScreen = () => {
           </div>
           <div className="flex-1 mt-4 relative overflow-hidden">
             <img className='relative z-10' src="/device-pile.png" alt="tv image" />
-            <video className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[83%] h-[46%]' src="video-devices.m4v" type='video/mp4'
+            <video className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[83%] h-[46%]' src="/video-devices.m4v" type='video/mp4'
               playsInline
               muted
               loop

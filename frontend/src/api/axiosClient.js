@@ -1,8 +1,6 @@
 import axios from "axios";
 const axiosClient = axios.create({
-    baseURL: '/api/',
-    headers: {
-        'Content-Type': 'application/json',
-    }
+    baseURL: 'https://vietsubmovies.onrender.com',
+    withCredentials:true,
 })
 export default axiosClient

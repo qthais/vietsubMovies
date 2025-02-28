@@ -497,6 +497,57 @@ exports.deleteMovieById = async (movieId) => {
     };
   }
 };
+exports.checkAndDeleteDuplicateMovies = async () => {
+  try {
+    const duplicateMovies = await Movie.aggregate([
+      { $group: { _id: "$title", count: { $sum: 1 }, movieIds: { $push: "$_id" } } },
+      { $match: { count: { $gt: 1 } } }
+    ]);
+
+    if (!duplicateMovies.length) {
+      return {
+        success: false,
+        status: 400,
+        message: "No duplicate movies found",
+      };
+    }
+
+    for (const movieGroup of duplicateMovies) {
+      const movies = await Movie.find({ title: movieGroup._id }).populate("credit videos");
+      
+      for (const movie of movies) {
+        if (movie.credit) {
+          const credit = await Credit.findById(movie.credit._id).populate("casts crews");
+          if (credit) {
+            await Cast.deleteMany({ _id: { $in: credit.casts } });
+            await Crew.deleteMany({ _id: { $in: credit.crews } });
+          }
+          await Credit.findByIdAndDelete(movie.credit._id);
+        }
+
+        if (movie.videos.length > 0) {
+          await Video.deleteMany({ _id: { $in: movie.videos } });
+        }
+      }
+
+      await Movie.deleteMany({ title: movieGroup._id });
+    }
+
+    return {
+      success: true,
+      status: 200,
+      message: "All duplicate movies and associated data deleted successfully",
+    };
+  } catch (err) {
+    console.error("Error deleting duplicate movies:", err);
+    return {
+      success: false,
+      status: 500,
+      message: err.message,
+    };
+  }
+};
+
 // Get all movies from the database
 exports.getAllMovie = async (limit) => {
   try {
@@ -507,12 +558,12 @@ exports.getAllMovie = async (limit) => {
     throw new Error("Failed to fetch movies");
   }
 };
-exports.fetchPopularMovies = async () => {
+exports.fetchPopularMovies = async (limit) => {
   try {
     const popularMovies = await Movie.find({isPublished:true}, overViewProjection)
       .populate("genres")
       .sort({ popularity: -1 })
-      .limit(15);
+      .limit(limit??15);
     return popularMovies;
   } catch (err) {
     console.error("Error fetching movies:", err.message);
@@ -564,6 +615,15 @@ exports.findMovieDetail = async (id) => {
     throw new Error("Failed to fetch popular movies");
   }
 };
+exports.findMovieByCategory= async(category)=>{
+  if(category=='popular'){
+    return exports.fetchPopularMovies(50)
+  }else if(category=='trending'){
+    return exports.fetchTrendingMovie(50)
+  }else if(category=='top_rated'){
+    return exports.fetchTopRatedMovies(50)
+  }
+}
 exports.rateMovie = async (id, rating, userId) => {
   if (rating < 0 || rating > 10) {
     return {
@@ -652,16 +712,16 @@ exports.testRateMovie = async (id, rating) => {
     };
   }
 };
-exports.fetchTrendingMovie = async () => {
+exports.fetchTrendingMovie = async (limit) => {
   const currentTime = new Date().getTime();
   const movies = await Movie.find({isPublished:true}, overViewProjection)
     .populate("genres")
     .sort({ release_date: -1 })
-    .limit(15);
+    .limit(limit??15);
   lastUpdatedTime = currentTime;
   return movies;
 };
-exports.fetchTopRatedMovies = async () => {
+exports.fetchTopRatedMovies = async (limit) => {
   try {
     const allMovies = await Movie.find({isPublished:true}, overViewProjection).populate(
       "genres"
@@ -669,7 +729,7 @@ exports.fetchTopRatedMovies = async () => {
     allMovies.sort((a, b) => b.averageRating - a.averageRating);
 
     // Limit the result to 15 movies
-    return (topRatedMovies = allMovies.slice(0, 15));
+    return (topRatedMovies = allMovies.slice(0, limit??15));
   } catch (err) {
     throw new Error(err.message);
   }

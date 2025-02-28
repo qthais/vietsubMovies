@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Upload, Eye, EyeOff } from "lucide-react";
 import Header from "../../components-main/header/Header";
 import { useAuth } from "../../Context/authContext";
-import axios from "axios";
+
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../../api/axiosClient";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -21,7 +22,11 @@ const ProfileEdit = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState(user?.image);
+  const [profileImage, setProfileImage] = useState(
+    user?.image?.startsWith("/api")
+      ? `${import.meta.env.VITE_API_BASE_URL}${user?.image}`
+      : user?.image
+  );
   const [isChangePassword, setIsChangePassword] = useState(false);
   useEffect(() => {
     if (!isChangePassword) {
@@ -64,7 +69,7 @@ const ProfileEdit = () => {
         data.append("currentPassword", formData.currentPassword);
         data.append("newPassword", formData.newPassword);
         if (formData.image) data.append("image", formData.image);
-        const res = await axios.put("/api/user/profile", data, {
+        const res = await axiosClient.put("/api/user/profile", data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setUser(res.data.user);
@@ -78,15 +83,13 @@ const ProfileEdit = () => {
 
   const handlePasswordSwitch = () => setIsChangePassword((prev) => !prev);
   const hasChange = () => {
-    if(user?.isGoogleAccount&&!user?.password){
-        return (
-            formData.username !== user.username ||
-            formData.email !== user.email ||
-            (
-              formData.newPassword &&
-              formData.confirmPassword) ||
-            formData.image
-          );
+    if (user?.isGoogleAccount && !user?.password) {
+      return (
+        formData.username !== user.username ||
+        formData.email !== user.email ||
+        (formData.newPassword && formData.confirmPassword) ||
+        formData.image
+      );
     }
     return (
       formData.username !== user?.username ||

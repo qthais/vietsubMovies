@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
-import Header from "../../components-main/header/Header";
-import "./AdminDashboard.css";
-import MovieCard from "../../components-main/movie-card/MovieCard";
-import { useGetAllMovies } from "../../hooks/getTrendingContent";
 import toast from "react-hot-toast";
 import ReactPaginate from "react-paginate";
 import { Edit } from "lucide-react";
-import EditMovieModal from "../../components-main/admin/editModal";
-import axiosClient from "../../api/axiosClient";
+import { useAuth } from "../Context/authContext";
+import { useSearchParams } from "react-router-dom";
+import Header from "../components-main/header/Header";
+import MovieCard from "../components-main/movie-card/MovieCard";
+import EditMovieModal from "../components-main/admin/editModal";
+import axiosClient from "../api/axiosClient";
+import movieApi from "../api/movieApi";
+import { useGetMoviesByType } from "../hooks/getTrendingContent";
 
-const AdminDashboard = () => {
-  const { allMovies, setAllMovies } = useGetAllMovies();
+const Explore = () => {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
+  const { movies, setMovies } = useGetMoviesByType(category);
   const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEditMovie, setCurrentEditMovie] = useState({});
   const itemsPerPage = 12;
+  const user = useAuth();
   useEffect(() => {
     const updatePageRange = () => {
       const width = window.innerWidth;
@@ -42,10 +47,12 @@ const AdminDashboard = () => {
   }, []);
   const handleReleased = async (movieID) => {
     try {
-      const response = await axiosClient.get(`/api/movie/${movieID}/toggleRelease`);
+      const response = await axiosClient.get(
+        `/api/movie/${movieID}/toggleRelease`
+      );
       const updatedMovie = response.data.content;
 
-      setAllMovies((prevMovies) =>
+      setMovies((prevMovies) =>
         prevMovies.map((movie) =>
           movie._id === updatedMovie._id
             ? { ...movie, isPublished: updatedMovie.isPublished }
@@ -72,7 +79,7 @@ const AdminDashboard = () => {
       );
       console.log(movieId);
       const updatedMovie = response.data.content;
-      setAllMovies((prevMovies) =>
+      setMovies((prevMovies) =>
         prevMovies.map((movie) =>
           movie._id === updatedMovie._id ? updatedMovie : movie
         )
@@ -86,16 +93,16 @@ const AdminDashboard = () => {
   };
 
   // Pagination logic
-  const pageCount = Math.ceil(allMovies.length / itemsPerPage);
+  const pageCount = Math.ceil(movies.length / itemsPerPage);
   const startOffset = currentPage * itemsPerPage;
   const endOffset = startOffset + itemsPerPage;
-  const currentMovies = allMovies.slice(startOffset, endOffset);
+  const currentMovies = movies.slice(startOffset, endOffset);
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected); // Update current page
   };
 
-  if (allMovies.length == 0) {
+  if (movies.length == 0) {
     return (
       <div className="h-screen text-white relative">
         <div className="container">
@@ -114,31 +121,35 @@ const AdminDashboard = () => {
           <div className="movieCard" key={movie._id}>
             <MovieCard item={movie} />
             <div className="mt-5 flex justify-between">
-              {movie.isPublished ? (
-                <button
-                  onClick={() => handleReleased(movie._id)}
-                  className={
-                    "text-xs bg-green-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
-                  }
-                >
-                  Released
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleReleased(movie._id)}
-                  className={
-                    "text-xs bg-red-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
-                  }
-                >
-                  Unreleased
-                </button>
+              {user.role == "admin" && (
+                <div className="mt-5 flex justify-between">
+                  {movie.isPublished ? (
+                    <button
+                      onClick={() => handleReleased(movie._id)}
+                      className={
+                        "text-xs bg-green-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                      }
+                    >
+                      Released
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleReleased(movie._id)}
+                      className={
+                        "text-xs bg-red-600 rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                      }
+                    >
+                      Unreleased
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleEditClick(movie)}
+                    className="flex items-center text-xs bg-first-blue rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
+                  >
+                    Update <Edit className="ml-1 size-4" />
+                  </button>
+                </div>
               )}
-              <button
-                onClick={() => handleEditClick(movie)}
-                className="flex items-center text-xs bg-first-blue rounded-2xl px-1 py-2 sm:px-4 sm:text-sm"
-              >
-                Update <Edit className="ml-1 size-4" />
-              </button>
             </div>
           </div>
         ))}
@@ -172,4 +183,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default Explore;

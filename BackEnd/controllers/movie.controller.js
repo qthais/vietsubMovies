@@ -1,5 +1,3 @@
-const Movie = require("../models/movie.model");
-const Genre = require("../models/genre.model");
 const {
   getAllMovie,
   findMovieDetail,
@@ -17,6 +15,8 @@ const {
   handleViewMovie,
   ToggleReleaseMovie,
   updateMovie,
+  findMovieByCategory,
+  checkAndDeleteDuplicateMovies,
 } = require("../services/movie.service");
 
 CACHE_EXPIRATION_TIME = 60 * 24 * 60 * 60 * 1000;
@@ -60,6 +60,15 @@ class MovieController {
       message: result.message,
     });
   }
+  async deleteMovieBySameTitle(req, res) {
+    const result = await checkAndDeleteDuplicateMovies();
+
+    return res.status(result.status).json({
+      success: result.success,
+      message: result.message,
+    });
+  }
+  
 
   async getTrendingMovie(req, res) {
     try {
@@ -74,6 +83,28 @@ class MovieController {
       return res.status(200).json({
         success: true,
         content: trendingMovies,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+  async getMoviesByType(req,res){
+    const {category}=req.query
+    try {
+      const movies = await findMovieByCategory(category);
+      if (movies.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "No trending movies found",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        content: movies,
       });
     } catch (err) {
       return res.status(500).json({
