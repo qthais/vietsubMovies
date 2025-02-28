@@ -1,11 +1,12 @@
 const User = require("../models/user.model");
 const bcryptjs = require("bcryptjs");
+const overViewProjection = require("../utils/projection");
 class UserController {
   async editProfile(req, res) {
     const userId = req.user._id;
     const { username, currentPassword, newPassword } = req.body;
     const image = req.file;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate('ratings',overViewProjection).populate('viewHistory',overViewProjection).populate('searchHistory',overViewProjection);
     if (!username && !currentPassword && !image&&!newPassword) {
       return res.status(400).json({
         success: false,
