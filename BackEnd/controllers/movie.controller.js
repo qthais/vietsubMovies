@@ -16,6 +16,7 @@ const {
   ToggleReleaseMovie,
   updateMovie,
   findMovieByCategory,
+  checkAndDeleteDuplicateMovies,
 } = require("../services/movie.service");
 
 CACHE_EXPIRATION_TIME = 60 * 24 * 60 * 60 * 1000;
@@ -59,6 +60,15 @@ class MovieController {
       message: result.message,
     });
   }
+  async deleteMovieBySameTitle(req, res) {
+    const result = await checkAndDeleteDuplicateMovies();
+
+    return res.status(result.status).json({
+      success: result.success,
+      message: result.message,
+    });
+  }
+  
 
   async getTrendingMovie(req, res) {
     try {

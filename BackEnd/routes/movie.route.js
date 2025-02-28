@@ -14,6 +14,7 @@ router.post("/:id/favorite",MovieController.handleLoveMovie)
 router.get("/type",MovieController.getMoviesByType)
 router.get("/:id/details",MovieController.getMovieDetails)
 router.post("/options",MovieController.getMovieByOptions)
+router.delete("/checkDuplicateMovies",adminRoute,MovieController.deleteMovieBySameTitle)
 // router.get("/:query/category", MovieController.getMoviesByCategory);
 router.get("/:query/category", MovieController.getMoviesByCategory);
 router.get("/top_rated", MovieController.getTopRatedMovies)

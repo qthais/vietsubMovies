@@ -497,6 +497,57 @@ exports.deleteMovieById = async (movieId) => {
     };
   }
 };
+exports.checkAndDeleteDuplicateMovies = async () => {
+  try {
+    const duplicateMovies = await Movie.aggregate([
+      { $group: { _id: "$title", count: { $sum: 1 }, movieIds: { $push: "$_id" } } },
+      { $match: { count: { $gt: 1 } } }
+    ]);
+
+    if (!duplicateMovies.length) {
+      return {
+        success: false,
+        status: 400,
+        message: "No duplicate movies found",
+      };
+    }
+
+    for (const movieGroup of duplicateMovies) {
+      const movies = await Movie.find({ title: movieGroup._id }).populate("credit videos");
+      
+      for (const movie of movies) {
+        if (movie.credit) {
+          const credit = await Credit.findById(movie.credit._id).populate("casts crews");
+          if (credit) {
+            await Cast.deleteMany({ _id: { $in: credit.casts } });
+            await Crew.deleteMany({ _id: { $in: credit.crews } });
+          }
+          await Credit.findByIdAndDelete(movie.credit._id);
+        }
+
+        if (movie.videos.length > 0) {
+          await Video.deleteMany({ _id: { $in: movie.videos } });
+        }
+      }
+
+      await Movie.deleteMany({ title: movieGroup._id });
+    }
+
+    return {
+      success: true,
+      status: 200,
+      message: "All duplicate movies and associated data deleted successfully",
+    };
+  } catch (err) {
+    console.error("Error deleting duplicate movies:", err);
+    return {
+      success: false,
+      status: 500,
+      message: err.message,
+    };
+  }
+};
+
 // Get all movies from the database
 exports.getAllMovie = async (limit) => {
   try {
