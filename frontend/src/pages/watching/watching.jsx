@@ -103,7 +103,7 @@ const Watching = () => {
 
   // link to rate video page
   const handleGoBack = () => {
-    navigate(`/`);
+    navigate(`/detail/${id}`);
   };
   if (isLoading) {
     return (
