@@ -23,7 +23,7 @@ const HomePage_Main = () => {
           <div className="section_header mb-1 mt-2 font-mono text-xl">
             <h2>History</h2>
           </div>
-          {user && user?.viewHistory.length > 0 ? (
+          {user && user?.viewHistory?.length > 0 ? (
             <MovieList movies={user?.viewHistory.slice(0, 5)} />
           ) : (
             <div className="no-movies">
