@@ -1,6 +1,7 @@
 
 const { generateToken } = require("../utils/generateToken")
 const { signup, login } = require("../services/auth.service");
+const ENV_VARS = require("../config/vars");
 class authController {
     async signup(req, res, next) {
         try {
@@ -48,7 +49,11 @@ class authController {
     }
     async logout(req, res, next) {
         try{
-            res.clearCookie("jwt")
+            res.clearCookie("jwt", {
+                httpOnly: true,
+                sameSite: "None",
+                secure: ENV_VARS.MODE !== "development", // Ensure same flags as when setting
+            });
             res.status(200).json({
                 success:true,
                 message:"Logged out successfully"
