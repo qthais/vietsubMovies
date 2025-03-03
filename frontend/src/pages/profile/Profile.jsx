@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 
 const ProfileEdit = () => {
+  const [isUpdate,setIsUpdate]=useState(false)
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
   const [formData, setFormData] = useState({
@@ -52,6 +53,7 @@ const ProfileEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsUpdate(true)
     const newErrors = {};
     if (isChangePassword) {
       if (formData.newPassword !== formData.confirmPassword)
@@ -77,6 +79,8 @@ const ProfileEdit = () => {
         navigate("/");
       } catch (error) {
         toast.error(error.response?.data?.message || error.message);
+      } finally{
+        setIsUpdate(false)
       }
     }
   };
@@ -377,7 +381,7 @@ const ProfileEdit = () => {
               } focus:outline-none`}
               disabled={!hasChange()}
             >
-              {hasChange() ? "Save changes" : "No changes to save"}
+              {isUpdate ? "Saving changes..." : hasChange() ? "Save changes" : "No changes to save"}
             </button>
           </div>
         </form>
