@@ -23,5 +23,10 @@ Routes(app)
 app.listen(port,()=>{
     console.log(`Server started at port ${port}`)
 })
+app.get('/status',(req,res)=>{
+    res.status(200).json({
+        message:"Server is alive!"
+    })
+})
 loadOphimMovies(100)
 //czJMSeHQEl6MeBie
