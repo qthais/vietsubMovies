@@ -12,6 +12,7 @@ db.connect()
 app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:4173', 'https://cinestream.onrender.com'], // ✅ Allow only specific domains
     credentials: true,
+    methods: ['GET','HEAD','PATCH', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow specific methods
 }));
 
 app.use('/api/avatarImages', express.static(path.join(__dirname, 'public/avatarImages')));
