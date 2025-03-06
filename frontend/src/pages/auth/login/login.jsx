@@ -70,15 +70,17 @@ const LoginPage = () => {
             </label>
             <GoogleLogin
               className="w-full py-2 bg-white text-first-blue font-light rounded-md"
-              onSuccess={(credentialResponse) => {
+              onSuccess={async(credentialResponse) => {
                 const decoded = jwtDecode(credentialResponse.credential)
                 const { name, email, picture } = decoded
-                login({
+                setIsLogin(true)
+                await login({
                   email,
                   username: name,
                   image: picture,
                   isGoogleLogin: true,
                 })
+                setIsLogin(false)
 
               }}
               onError={() => {

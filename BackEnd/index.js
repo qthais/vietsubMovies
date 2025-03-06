@@ -13,12 +13,6 @@ app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:4173', 'https://cinestream.onrender.com'], // ✅ Allow only specific domains
     credentials: true,
 }));
-app.use((req, res, next) => {
-    res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-    next();
-});
 
 app.use('/api/avatarImages', express.static(path.join(__dirname, 'public/avatarImages')));
 app.use(cookieParser())
