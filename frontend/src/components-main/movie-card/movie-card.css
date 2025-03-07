@@ -51,21 +51,40 @@
 }
 .movie-rating-box {
   display: flex;
-  order: 0;
-  /* Text color  */
-  color: #000000;
-  /* Auto layout */
   justify-content: center;
-  width: 2vw;
-  height: calc(1vw + 3px);
+  align-items: center; /* Ensures text stays centered */
+  width: 40px; /* Fixed width for readability */
+  height: 24px; /* Fixed height */
   background: #ffa539;
-  border-radius: calc(0.3vw);
+  color: #000000; /* Text color */
+  border-radius: 6px; /* Keeps the rounded shape consistent */
+  font-size: 0.8rem; /* Responsive text size */
+  font-weight: bold;
   z-index: 10;
 }
-.movie-rating-box p {
-  font-size: calc(0.8vw);
-  align-self: center;
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 768px) {
+  .movie-rating-box {
+    width: 35x; /* Slightly larger on mobile for visibility */
+    height: 20px;
+    font-size: 0.9rem;
+  }
 }
+
+.movie-rating-box p {
+  font-size: min(0.8vw, 14px); /* Prevents text from shrinking too much */
+  align-self: center;
+  font-weight: bold;
+}
+
+/* Ensure text is readable on very small screens */
+@media (max-width: 768px) {
+  .movie-rating-box p {
+    font-size: 14px; /* Set a readable minimum size on mobile */
+  }
+}
+
 .movie-card:hover .movie-rating-box {
   transition: step-start;
   opacity: 0;

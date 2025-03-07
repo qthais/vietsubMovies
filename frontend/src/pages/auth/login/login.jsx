@@ -14,17 +14,17 @@ const LoginPage = () => {
     setIsLogin(false)
   };
   return (
-    <div className="card border-transparent p-7 gap-5 max-w-md w-full relative bg-black/50 rounded-[40px] backdrop-blur-[20px] overflow-hidden">
+    <div className="border-transparent p-7 gap-5 max-w-sm md:max-w-md w-full relative bg-black/50 rounded-[40px] backdrop-blur-[20px] overflow-hidden">
       <div className="flex justify-center items-center mx-auto text-white text-xl font-normal font-['Poppins']">
         Welcome to CineStream
       </div>
-      <div className="flex justify-center items-center mx-auto text-white text-[64px] font-extrabold font-['Poppins'] uppercase">
+      <div className="flex justify-center items-center mx-auto text-white text-3xl my-2 md:text-6xl font-extrabold font-['Poppins'] uppercase">
         Log in
       </div>
       <div className="mx-auto justify-start items-start gap-[27px]">
         <form
           onSubmit={handleLogin}
-          className="space-y-4 flex flex-col gap-2"
+          className="space-y-4 flex flex-col gap-2 mx-3"
           action=""
         >
           <div>
@@ -60,7 +60,7 @@ const LoginPage = () => {
             {/* <button className='w-full py-2 bg-white text-first-blue font-light rounded-md 
                         hover:bg-second-blue hover:text-white'>Sign in with Google</button> */}
             <button
-              className="w-[212px] h-[38.5px] py-2 bg-first-blue text-white font-normal rounded-md 
+              className="w-full py-2 bg-first-blue text-white font-normal rounded-md 
                         hover:bg-white hover:text-second-blue"
             >
               {isLogin?'Logging in ...':'Login'}

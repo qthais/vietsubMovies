@@ -22,7 +22,7 @@ const Logitech = () => {
     };
 
     return (
-        <div className="relative items-center justify-center w-full py-12 px-4 lg:px-12 overflow-hidden">
+        <div className="relative items-center justify-center w-full py-12 px-4 lg:px-12 h-[100vh] overflow-hidden">
             {/* Background Layers */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
                 <div
@@ -57,7 +57,7 @@ const Logitech = () => {
 
             {/* Main Content Section */}
             <div
-                className={`relative top-[15%]  flex flex-col items-center justify-center transition-transform duration-500 ${isLogin ? '' : 'transform translate-x-0 lg:translate-x-[35%]'}`}
+                className={`relative top-[3%]  flex flex-col gap-4 items-center justify-center transition-transform duration-500 ${isLogin ? '' : 'transform translate-x-0 lg:translate-x-[35%]'}`}
             >
                 <ButtonAuth
                     isLogin={isLogin}

@@ -28,8 +28,8 @@ const SignUpPage = () => {
     };
 
     return (
-        <div className="card border-transparent p-8 gap-4 max-w-md w-full relative bg-black/50 rounded-[40px] backdrop-blur-[20px] overflow-hidden">
-            <div className="flex justify-center items-center mx-auto text-white text-[64px] font-extrabold font-['Poppins'] uppercase">
+        <div className="card border-transparent p-8 gap-4 max-w-sm md:max-w-md w-full relative bg-black/50 rounded-[40px] backdrop-blur-[20px] overflow-hidden">
+            <div className="flex justify-center items-center mx-auto mb-5 text-white text-3xl md:text-6xl font-extrabold font-['Poppins'] uppercase">
                 sign up
             </div>
             <form
