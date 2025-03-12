@@ -35,12 +35,6 @@ function Sidebar({ isOpen, onClose }) {
               </Link>
             </li>
             <li>
-              <Link to="/history" className="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
-                <FontAwesomeIcon className="size-4" icon="fa-solid fa-history" />
-                <span className="ms-3">History</span>
-              </Link>
-            </li>
-            <li>
               <Link to="/movie/type?category=top_rated" className="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
                 <FontAwesomeIcon className="size-4" icon="fa-solid fa-heart" />
                 <span className="ms-3">Top Movies</span>
