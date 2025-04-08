@@ -7,7 +7,11 @@ This project is a wonderful platform like phimmoi and animevietsub, allowing use
 
 ## 📝 About the Project
 
+**Demo**: https://drive.google.com/file/d/17OLP0bsyan57bd5fa9Dv0djELToazTAl/view?usp=drive_link
+
 **Deploy**: https://cinestream.onrender.com/
+
+
 
 
 CinesStream is a web application designed for movie enthusiasts to explore and watch films. Users can search for movies, view detailed information, and manage their profiles. The project is built as part of a course requirement to demonstrate web development skills.
