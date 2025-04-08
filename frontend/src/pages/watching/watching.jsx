@@ -7,7 +7,6 @@ import { formatReleaseDate } from "../../utils/DateFunction";
 import { ORIGINAL_IMG_BASE_URL } from "../../utils/constant";
 import { useAuth } from "../../Context/authContext";
 import axiosClient from "../../api/axiosClient";
-import { FaInfoCircle } from "react-icons/fa";
 const Watching = () => {
   const { id, type } = useParams(); //watching/:id or watching/:id/:type
   const [videoLink, setVideoLink] = useState([]);
@@ -125,11 +124,8 @@ const Watching = () => {
               <h1 className="md:text-5xl text-3xl mx-auto mt-6 max-w-[1000px] font-bold text-balance">
                 {movieData?.title}
               </h1>
-              <div className="go-back">
-                <FaInfoCircle
-                  className="go-back-btn"
-                  onClick={handleGoBack}
-                />
+              <div onClick={handleGoBack} className="go-back">
+                <button className="font-bold bg-white text-first-blue py-2 px-3 rounded-lg hover:bg-first-blue hover:text-white">Details</button>
               </div>
               <iframe
                 src={videoLink}
