@@ -76,7 +76,6 @@
   align-items: top;
   flex-direction: column;
   display: flex;
-  padding-left: 2vw;
   gap: 1vw;
   font-size: calc(10px + 0.7vw);
 }
@@ -94,11 +93,11 @@
 }
 .Heart {
   display: flex;
-  justify-content: center; /* CÄƒn giá»¯a theo chiá»u ngang */
-  align-items: center; /* CÄƒn giá»¯a theo chiá»u dá»c */
+  justify-content: center; 
+  align-items: center; 
   padding: 0;
-  gap: 0; /* Äáº£m báº£o khĂ´ng cĂ³ khoáº£ng cĂ¡ch thá»«a */
-  width: calc(15px + 2vw);
+  gap: 0; 
+  width: calc(20px + 2vw);
   height: inherit;
 
   background: #03abe0;
@@ -173,6 +172,8 @@
   color: #ffffff;
 }
 .movie-info {
+  padding: 10px;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

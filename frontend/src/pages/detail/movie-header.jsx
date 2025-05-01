@@ -54,14 +54,14 @@ const DetailHeader = ({ movie, credit }) => {
   }
   return (
     <div
-      className="detail-header-item flex flex-col sm:flex-row"
+      className="detail-header-item flex flex-col items-center sm:flex-row"
       style={{ backgroundImage: `url(${backdrop})` }}
     >
-      <div className="hidden lg:flex detail-backdrop">
+      <div className="hidden md:flex md:detail-backdrop">
         <img src={poster} alt={`${movie.title} poster`} />
       </div>
-      <div className="frame1">
-        <div className="detail-title">
+      <div className="frame1 pl-[20vw] md:pl-[5vw] w-fit md:w-auto">
+        <div className="p-[10px] detail-title w-fit">
           <h2>{movie.title}</h2>
         </div>
 
@@ -111,7 +111,7 @@ const DetailHeader = ({ movie, credit }) => {
             </div>
           </div>
 
-          <div className="genres">
+          <div className="genres w-fit">
             <h4>Genre: </h4>
             {genres.length > 0 ? (
               genres

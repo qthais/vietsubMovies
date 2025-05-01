@@ -22,7 +22,7 @@ const Logitech = () => {
     };
 
     return (
-        <div className="relative items-center justify-center w-full py-12 px-4 lg:px-12 h-[100vh] overflow-hidden">
+        <div className="relative flex items-center justify-center w-full py-12 px-4 lg:px-12 h-[100vh] overflow-hidden">
             {/* Background Layers */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
                 <div
