@@ -37,7 +37,8 @@ app.get("/status", (req, res) => {
     message: "Server is alive!",
   });
 });
-setTimeout(() => {
-  loadOphimMovies(10);
-}, 1000 * 60 * 60 * 24 * 7);
+
+setInterval(() => {
+  loadOphimMovies(2);
+}, 1000 * 60 * 60 * 24 );
 //czJMSeHQEl6MeBie

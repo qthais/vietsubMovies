@@ -95,11 +95,6 @@ async function initMovies(movieList) {
 }
 
 async function loadOphimMovies(numberofPages) {
-  const initialized = await Settings.findOne({ key: 'moviesInitialized' });
-  if (initialized && initialized.value === 'true') {
-    console.log('Movies have already been initialized.');
-    return;
-  }
   for (let page = 1; page < numberofPages; page++) {
     const data = (await axios.get(`https://ophim1.com/danh-sach/phim-moi-cap-nhat?page=${page}`)).data
     const movies = data.items.filter(movie => movie.tmdb.type === "movie")
@@ -122,7 +117,6 @@ async function loadOphimMovies(numberofPages) {
     }
   }
   console.log('All movies have been loaded!')
-  await Settings.updateOne({ key: 'moviesInitialized' }, { value: 'true' }, { upsert: true });
 }
 
 
