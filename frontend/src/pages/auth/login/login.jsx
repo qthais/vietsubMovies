@@ -60,7 +60,8 @@ const LoginPage = () => {
             {/* <button className='w-full py-2 bg-white text-first-blue font-light rounded-md 
                         hover:bg-second-blue hover:text-white'>Sign in with Google</button> */}
             <button
-              className="w-full py-2 bg-first-blue text-white font-normal rounded-md 
+            disabled={isLogin}
+              className="disabled:cursor-not-allowed w-full py-2 bg-first-blue text-white font-normal rounded-md 
                         hover:bg-white hover:text-second-blue"
             >
               {isLogin?'Logging in ...':'Login'}
@@ -71,9 +72,9 @@ const LoginPage = () => {
             <GoogleLogin
               className="w-full py-2 bg-white text-first-blue font-light rounded-md"
               onSuccess={async(credentialResponse) => {
+                setIsLogin(true)
                 const decoded = jwtDecode(credentialResponse.credential)
                 const { name, email, picture } = decoded
-                setIsLogin(true)
                 await login({
                   email,
                   username: name,

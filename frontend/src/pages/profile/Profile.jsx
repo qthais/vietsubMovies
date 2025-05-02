@@ -379,7 +379,7 @@ const ProfileEdit = () => {
                   ? "bg-gray-400 text-gray500 hover:bg-gray-500"
                   : "bg-cyan-400 text-white hover:bg-cyan-500"
               } focus:outline-none`}
-              disabled={!hasChange()}
+              disabled={!hasChange()||isUpdate}
             >
               {isUpdate ? "Saving changes..." : hasChange() ? "Save changes" : "No changes to save"}
             </button>

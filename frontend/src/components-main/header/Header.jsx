@@ -212,6 +212,7 @@ const Header = () => {
 
                     {/* Logout button */}
                     <button
+                    disabled={isLogOut}
                       className="w-full flex items-center px-4 py-3 text-left text-white hover:bg-[#2d2d2d] rounded-lg transition-colors"
                       onClick={async () => {
                         setIsLogOut(true)
