@@ -6,6 +6,7 @@ This project is a wonderful platform like phimmoi and animevietsub, allowing use
 ---
 
 ## 📝 About the Project
+> 📉 Production hasn't worked on IOS due to different cookie behavior.
 
 **Demo**: https://drive.google.com/file/d/17OLP0bsyan57bd5fa9Dv0djELToazTAl/view?usp=drive_link
 
