@@ -238,11 +238,11 @@ const Header = () => {
           <div className="search-modal-content">
             <div className="header_wrap container">
               {/* Logo */}
-              <div className="logo">
+              <div className="hidden md:block logo">
                 <Link to="/">tMovies</Link>
               </div>
 
-              <div className="search-container">
+              <div className="search-container sm:w-full md:w-[80%]">
                 <input
                   type="text"
                   placeholder="Search Movie"

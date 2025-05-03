@@ -21,23 +21,27 @@ const SearchDropdown = ({
     "Very poor: 2+",
   ];
   return (
-    <div className="drop-down">
+    <div className="drop-down max-h-[80vh]">
       {/* close button */}
-      <button className="close-btn-container" >
-        <div> <AiFillCloseSquare className="close-btn" onClick={CloseDropDown}/> </div>
-       
+      <button className="close-btn-container">
+        <div>
+          {" "}
+          <AiFillCloseSquare
+            className="cursor-pointer text-2xl sm:text-3xl text-gray-400 hover:text-white transition-colors duration-200"
+            onClick={CloseDropDown}
+          />{" "}
+        </div>
       </button>
-      <div className ="filter-type">
-      <h3>Genres</h3>
-      <div className= "dropdown-line">
+      <div className="filter-type">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-medium">Genres</h3>
+        <div className="dropdown-line"></div>
+        <p className="text-sm sm:text-lg md:text-xl">*Pick a maximum of 3*</p>
       </div>
-      <p>*Pick a maximum of 3*</p>
-      </div>
-      <div className="genre-list">
+      <div className="grid grid-cols-3 sm:grid-cols-5 xl:grid-cols-7 gap-4 my-5">
         {genres.map((genre) => (
           <div
             key={genre}
-            className={`genre-tab ${
+            className={`relative genre-tab text-sm sm:text-base md:text-lg  ${
               selectedGenres.includes(genre) ? "selected" : ""
             } 
                         ${
@@ -50,25 +54,21 @@ const SearchDropdown = ({
           >
             {/*tick when genre is choosen*/}
             {genre}
-            {selectedGenres.includes(genre) && (
-              <span className="tick-icon">
-                <TiTick />
-              </span>
-            )}
           </div>
         ))}
       </div>
-  <div className ="filter-type">  
-      <h3>Rating score</h3>
-      <div className= "dropdown-line">
+      <div className="filter-type">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-medium">
+          Rating score
+        </h3>
+        <div className="dropdown-line"></div>
+        <p className="text-sm sm:text-lg md:text-xl">*Pick a maximum of 3*</p>
       </div>
-      <p>*Pick a maximum of 3*</p>
-      </div>
-      <div className="ratingScore-list">
+      <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 gap-4 my-5">
         {ratingScore.map((rating) => (
           <div
             key={rating}
-            className={`rating-tab ${
+            className={`rating-tab text-sm sm:text-base md:text-lg  ${
               selectedRatings.includes(parseFloat(rating.split(":")[1]))
                 ? "selected"
                 : ""
@@ -84,24 +84,20 @@ const SearchDropdown = ({
             onClick={() => handleRatingSelect(rating)}
           >
             {rating}
-            {selectedRatings.includes(parseFloat(rating.split(":")[1])) && (
-              <span className="tick-icon">
-                <TiTick />
-              </span>
-            )}
           </div>
         ))}
       </div>
 
-      <button onClick={() => {
-    if (selectedRatings.length < 1 && selectedGenres.length < 1) {
-      alert("Please select a filter");
-    } else {
-      CloseDropDown();
-    }
-  }}
-  className="apply-filter-btn"
->
+      <button
+        onClick={() => {
+          if (selectedRatings.length < 1 && selectedGenres.length < 1) {
+            alert("Please select a filter");
+          } else {
+            CloseDropDown();
+          }
+        }}
+        className="apply-filter-btn sm:text-lg md:text-xl font-medium w-full h-12 sm:h-14"
+      >
         Apply Filters
       </button>
     </div>
