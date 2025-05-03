@@ -16,7 +16,7 @@ const MovieSchema = new Schema({
     ratingCount: { type: Number, default: 0 },
     isPublished:{
         type:Boolean,
-        default:false
+        default:true
     },
     view: { type: Number, default: () => Math.floor(Math.random() * 100000) + 100 },
 },opts);
