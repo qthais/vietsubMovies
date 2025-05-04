@@ -166,9 +166,10 @@ const Explore = () => {
         nextLabel="Next >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={pageRangeDisplayed}
+        marginPagesDisplayed={pageRangeDisplayed-3}
         pageCount={pageCount}
-        previousLabel="< Previous"
-        containerClassName="flex justify-center items-center space-x-2 mt-8" // Wrapper styling
+        previousLabel="< Prev"
+        containerClassName="flex justify-center items-center space-x-2 mt-8 mx-4 overflow-auto" // Wrapper styling
         pageClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black" // Individual page styling
         activeClassName="bg-blue-500 text-white" // Active page styling
         previousClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black"

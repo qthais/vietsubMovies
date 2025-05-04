@@ -42,7 +42,9 @@ const AdminDashboard = () => {
   }, []);
   const handleReleased = async (movieID) => {
     try {
-      const response = await axiosClient.get(`/api/movie/${movieID}/toggleRelease`);
+      const response = await axiosClient.get(
+        `/api/movie/${movieID}/toggleRelease`
+      );
       const updatedMovie = response.data.content;
 
       setAllMovies((prevMovies) =>
@@ -159,8 +161,8 @@ const AdminDashboard = () => {
         onPageChange={handlePageClick}
         pageRangeDisplayed={pageRangeDisplayed}
         pageCount={pageCount}
-        previousLabel="< Previous"
-        containerClassName="flex justify-center items-center space-x-2 mt-8" // Wrapper styling
+        previousLabel="< Prev"
+        containerClassName="flex justify-center items-center space-x-2 mt-8 mx-4" // Wrapper styling
         pageClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black" // Individual page styling
         activeClassName="bg-blue-500 text-white" // Active page styling
         previousClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black"

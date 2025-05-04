@@ -189,9 +189,9 @@ const Search = () => {
 
                   if (movieName) {
                     return (
-                      <h2 className="text-2xl font-semibold text-second-blue my-4">
+                      <h2 className="mx-12 text-2xl font-semibold text-second-blue my-4">
                         {movies.length} results for{" "}
-                        <span className="font-bold">"{movieName}"</span>{" "}
+                        <span className="font-bold">{movieName}</span>{" "}
                         {genres || ratings ? "with " : ""}
                         {genres ? (
                           <span className="text-blue-600">
@@ -212,7 +212,7 @@ const Search = () => {
                     );
                   } else {
                     return (
-                      <h2>
+                      <h2 className="mx-12 text-2xl font-semibold text-second-blue my-4">
                         {movies.length} results with{" "}
                         {genres ? `genres: ${genres}` : ""}
                         {genres && ratings ? " , " : ""}
@@ -269,14 +269,14 @@ const Search = () => {
         setMovie={setCurrentEditMovie}
         onSave={() => handleUpdate(currentEditMovie._id)}
       />
-            <ReactPaginate
+      <ReactPaginate
         breakLabel="..."
         nextLabel="Next >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={pageRangeDisplayed}
         pageCount={pageCount}
-        previousLabel="< Previous"
-        containerClassName="flex justify-center items-center space-x-2 mt-8" // Wrapper styling
+        previousLabel="< Prev"
+        containerClassName="flex justify-center items-center space-x-2 mt-8 mx-4" // Wrapper styling
         pageClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black" // Individual page styling
         activeClassName="bg-blue-500 text-white" // Active page styling
         previousClassName="px-4 py-2 border rounded-md text-white hover:bg-gray-100 hover:text-black"

@@ -16,7 +16,7 @@
   min-width: 1vw;
 }
 .search-movie-list {
-  width: 70%;
+  max-width: 90%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
