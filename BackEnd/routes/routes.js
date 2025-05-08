@@ -5,13 +5,18 @@ const tvRoutes = require("./tv.route");
 const searchRoutes = require("./search.route");
 const userRoutes = require("./user.route");
 const apicache = require("apicache");
-const onlyStatus200 = (req, res) => res.statusCode === 200
 const cache = apicache.middleware;
+const configCache= cache("10 minutes",(req,res)=>{
+  if(req.method==='GET'){
+    return res.statusCode===200
+  }
+  return false
+})
 function Routes(app) {
   app.use("/api/auth", authRoutes);
-  app.use("/api/movie", protectRoute, cache("10 minutes",onlyStatus200), movieRoutes);
+  app.use("/api/movie", protectRoute, configCache, movieRoutes);
   app.use("/api/tv", protectRoute, tvRoutes);
-  app.use("/api/search", protectRoute, cache("10 minutes",onlyStatus200), searchRoutes);
-  app.use("/api/user", protectRoute, cache("10 minutes",onlyStatus200), userRoutes);
+  app.use("/api/search", protectRoute, configCache, searchRoutes);
+  app.use("/api/user", protectRoute, configCache, userRoutes);
 }
 module.exports = Routes;
