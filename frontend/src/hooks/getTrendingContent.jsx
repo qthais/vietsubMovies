@@ -28,15 +28,17 @@ const useGetAllMovies=()=>{
 }
 const useGetMoviesByType= (category)=>{
     const [movies, setMovies] = useState([])
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const getAllMovies = async () => {
+            setLoading(true)
             const res = await axiosClient.get(`/api/movie/type?category=${category}`)
             setMovies(res.data.content)
+            setLoading(false)
         }
         getAllMovies()
     }, [category])
-    return {movies,setMovies}
+    return {movies,setMovies,loading}
 }
 
 export {useGetTrendingContent,useGetAllMovies,useGetMoviesByType}

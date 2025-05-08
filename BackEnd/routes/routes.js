@@ -7,10 +7,7 @@ const userRoutes = require("./user.route");
 const apicache = require("apicache");
 const cache = apicache.middleware;
 const configCache= cache("10 minutes",(req,res)=>{
-  if(req.method==='GET'){
-    return res.statusCode===200
-  }
-  return false
+  return req.method === 'GET' && res.statusCode === 200;
 })
 function Routes(app) {
   app.use("/api/auth", authRoutes);

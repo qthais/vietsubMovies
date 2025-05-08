@@ -13,7 +13,7 @@ import { useGetMoviesByType } from "../hooks/getTrendingContent";
 const Explore = () => {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-  const { movies, setMovies } = useGetMoviesByType(category);
+  const { movies, setMovies,loading } = useGetMoviesByType(category);
   const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -101,7 +101,7 @@ const Explore = () => {
     setCurrentPage(event.selected); // Update current page
   };
 
-  if (movies.length == 0) {
+  if (movies.length == 0||loading) {
     return (
       <div className="h-screen text-white relative">
         <div className="container">
