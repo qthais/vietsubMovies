@@ -6,6 +6,7 @@ exports.protectRoute = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
     if (!token) {
+      res.set('x-cache-bypass', true);
       return res.status(401).json({
         success: false,
         message: "Unauthorized - No token provided",
@@ -13,6 +14,7 @@ exports.protectRoute = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, vars.JWT_SECRET);
     if (!decoded) {
+      res.set('x-cache-bypass', true);
       return res.status(401).json({
         success: false,
         message: "Unauthorized - Invalid token!",
