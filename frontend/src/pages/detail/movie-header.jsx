@@ -57,7 +57,7 @@ const DetailHeader = ({ movie, credit }) => {
       className="detail-header-item flex flex-col items-center sm:flex-row"
       style={{ backgroundImage: `url(${backdrop})` }}
     >
-      <div className="hidden pl-8 md:flex md:detail-backdrop">
+      <div className="hidden xl:pl-[10vw] md:pl-[6vw] md:flex md:detail-backdrop">
         <img src={poster} alt={`${movie.title} poster`} />
       </div>
       <div className="frame1 p-[15vw] md:pl-[5vw] w-fit md:w-auto">
